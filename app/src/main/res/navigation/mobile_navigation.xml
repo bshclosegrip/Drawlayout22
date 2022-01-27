@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_main"
+        android:name="com.ds.drawlayout.ui.main.MainFragment"
+        android:label="@string/menu_main"
+        tools:layout="@layout/fragment_main" />
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.ds.drawlayout.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+        <action
+            android:id="@+id/action_nav_home_to_map"
+            app:destination="@id/nav_map" />
+
+    <fragment
+        android:id="@+id/nav_map"
+        android:name="com.ds.drawlayout.ui.map.MapFragment"
+        android:label="@string/menu_map"
+        tools:layout="@layout/fragment_map" />
+        <action
+            android:id="@+id/action_nav_map_to_notification"
+            app:destination="@id/nav_notification" />
+
+    <fragment
+        android:id="@+id/nav_map_google"
+        android:name="com.ds.drawlayout.ui.map.MapGoogleFragment"
+        android:label="@string/menu_map_google"
+        tools:layout="@layout/fragment_map_google" />
+    <action
+        android:id="@+id/action_nav_map_naver"
+        app:destination="@id/nav_map_naver" />
+
+
+    <fragment
+        android:id="@+id/nav_map_naver"
+        android:name="com.ds.drawlayout.ui.map.MapNaverFragment"
+        android:label="@string/menu_map_naver"
+        tools:layout="@layout/fragment_notification" />
+        <action
+            android:id="@+id/action_nav_map_google"
+            app:destination="@id/nav_map_google" />
+
+    <fragment
+        android:id="@+id/nav_notification"
+        android:name="com.ds.drawlayout.ui.notification.NotificationFragment"
+        android:label="@string/menu_notification"
+        tools:layout="@layout/fragment_notification" />
+    <action
+        android:id="@+id/action_nav_notifi_to_setting"
+        app:destination="@id/nav_settings" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.ds.drawlayout.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.ds.drawlayout.ui.logout.LogoutFragment"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/fragment_logout" />
+</navigation>

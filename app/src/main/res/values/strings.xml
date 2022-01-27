@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Drawlayout</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_logout">Log Out</string>
+
+    <string name="menu_main">Main</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_map">Map</string>
+    <string name="menu_map_naver">Map Naver</string>
+    <string name="menu_map_google">Map Google</string>
+    <string name="menu_notification">Notification</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_logout">Log Out</string>
+
+    <string name="logout_textview">Logout Processing</string>
+    <string name="logout_button_cancel">Cancel Logout</string>
+
+    <string name="settings_textview">Setting Menu</string>
+    <string name="settings_recyclerview">Setting Recyclerview</string>
+    <string name="settings_button">Setting Button</string>
+
+    <string name="hint_id">ID를 입력하세요</string>
+    <string name="hint_password">패스워드를 입력하세요</string>
+    <string name="hint_name">성명을 입력하세요</string>
+    <string name="hint_mobileNO">휴대폰번호를 입력하세요</string>
+    <string name="hint_email">이메일을 입력하세요</string>
+    <string name="btn_login">로그인</string>
+    <string name="btn_register">회원가입</string>
+    <string name="btn_logout">로그아웃</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_web_client_ids">lemonade08</string>
+</resources>

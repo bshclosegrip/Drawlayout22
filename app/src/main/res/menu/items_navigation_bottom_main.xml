@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/navi_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_navi_home"
+        android:title="홈"/>
+
+    <item
+        android:id="@+id/navi_map"
+        android:enabled="true"
+        android:icon="@drawable/ic_navi_map"
+        android:title="지도"/>
+
+    <item
+        android:id="@+id/navi_chatting"
+        android:enabled="true"
+        android:icon="@drawable/ic_navi_chatting"
+        android:title="채팅"/>
+
+    <item
+        android:id="@+id/navi_myinfo"
+        android:enabled="true"
+        android:icon="@drawable/ic_navi_myinfo"
+        android:title="내 정보"/>
+</menu>

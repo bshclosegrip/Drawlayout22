@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원가입"
+        android:textSize="30sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingTop="100dp"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_activity_sign_up"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="160dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        tools:ignore="MissingConstraints">
+        <EditText
+            android:id="@+id/edittext_id"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
+            tools:ignore="MissingConstraints" />
+        <EditText
+            android:id="@+id/edittext_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/hint_password"
+            android:inputType="textWebPassword"
+            android:padding="10dp"
+            tools:ignore="MissingConstraints" />
+        <DatePicker
+            android:id="@+id/date_picker"
+            android:overScrollMode="always"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
+            />
+        <EditText
+            android:id="@+id/edittext_cellphone_number"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/hint_mobileNO"
+            android:inputType="phone"
+            android:padding="10dp"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_activity_sign_up2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_activity_sign_up"
+        tools:ignore="MissingConstraints">
+        <Button
+            android:id="@+id/button_save_activity_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="저장"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0.5"/>
+        <Button
+            android:id="@+id/button_cancel_activity_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="취소"
+            android:layout_weight="0.5"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

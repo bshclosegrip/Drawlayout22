@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#000000">
+
+    <LinearLayout
+        android:id="@+id/linearLayout_fragment_gallery"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="Orientation">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_google_map_fragment_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bin_button_google"
+            android:text="Google Map"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:layout_weight="0.5"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_naver_map_fragment_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bin_button_login"
+            android:text="Naver Map"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="3dp"/>
+    </LinearLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager_fragment_gallery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout_fragment_gallery"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginBottom="80dp">
+
+
+    </androidx.viewpager.widget.ViewPager>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_button_fragment_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="65dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:srcCompat="@android:drawable/ic_lock_idle_alarm"
+        tools:ignore="MissingConstraints" />
+</RelativeLayout>
+
+<!--<com.google.android.material.tabs.TabLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent">-->
+    <!--<com.google.android.material.tabs.TabItem-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--    />-->
+    <!--<com.google.android.material.tabs.TabItem-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--    />-->
+<!--</com.google.android.material.tabs.TabLayout>-->
