@@ -62,6 +62,14 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         mRecyclerItemList.add(new RecyclerviewData(android.R.drawable.btn_star_big_on,5+". Downloads", null));
         mRecyclerviewAdapter.setRecyclerList(mRecyclerItemList);
         mRecyclerView.setOnClickListener(this::onClick);
+
+//        mRecyclerviewAdapter.setOnItemClickListener(new mRecyclerviewAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View v, int position) {
+//                // TODO : 아이템 클릭 이벤트를 MainActivity에서 처리.
+//            }
+//        }); ;
+
         return root;
     }
 
@@ -82,6 +90,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+
 //        switch(view.getId()) {
 //            case R.id.recyclerview_settings:
 //                Log.d(TAG, "R.id.recyclerview_settings");

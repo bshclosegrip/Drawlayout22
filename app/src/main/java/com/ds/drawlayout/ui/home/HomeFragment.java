@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -63,6 +64,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Animation fab_open, fab_close;
     private boolean isFabOpen;
     private SignInActivity mSignInActivity;
+    private MapFragment mMapFragment;
 //    private String strtext = getArguments().getString("edttext");
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -77,6 +79,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mButtonGoogle = root.findViewById(R.id.button_login_google_fragment_home);
         mButtonGoogleNew = root.findViewById(R.id.button_login_google_new);
         mFloatingActionButtonMain = root.findViewById(R.id.floating_button_main_fragment_home);
+        mFloatingActionButtonMain.setImageResource(android.R.drawable.ic_input_add);
         mFloatingActionButtonMap = root.findViewById(R.id.floating_button_map_fragment_home);
         mFloatingActionButtonInfo = root.findViewById(R.id.floating_button_info_fragment_home);
         mForgetPassword = root.findViewById(R.id.textview_forget_fragment_home);
@@ -119,7 +122,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onDestroyView() {
         super.onDestroyView();
         Log.d(TAG, "onCreateView()");
-
         mBinding = null;
     }
 
@@ -133,15 +135,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.button_signup:
-                Log.d(TAG, "onCreateView()");
-
+                Log.d(TAG, "button_signup : ");
                 Intent intent = new Intent(getContext(), SignUpActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.button_signin:
-                Log.d(TAG, "onCreateView()");
-
+                Log.d(TAG, "button_signin : ");
                 Intent intentSignIn = new Intent(getContext(), SignInActivity.class);
                 startActivity(intentSignIn);
                 String userID = mEditTextId.getText().toString();
@@ -155,7 +155,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                             boolean success = jsonObject.getBoolean("success");
 
                             if (success) {//로그인 성공시
-                                Log.d(TAG, "onCreateView()");
+                                Log.d(TAG, "if (success)");
                                 String userID = jsonObject.getString("userID");
                                 String userPass = jsonObject.getString("userPassword");
                                 String userCell = jsonObject.getString("userCell");
@@ -167,17 +167,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                                 intent.putExtra("userPass", userPass);
                                 intent.putExtra("userName", userCell);
                                 startActivity(intent);
-
                             } else {//로그인 실패시
-                                Log.d(TAG, "onCreateView()");
-
+                                Log.d(TAG, "else()");
                                 Toast.makeText(getContext(), "로그인 실패", Toast.LENGTH_SHORT).show();
                                 return;
                             }
 
                         } catch (JSONException e) {
-                            Log.d(TAG, "onCreateView()");
-
+                            Log.d(TAG, "catch (JSONException e)");
                             e.printStackTrace();
                         }
                     }
@@ -188,13 +185,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.textview_forget_fragment_home:
-                Log.d(TAG, "onCreateView()");
+                Log.d(TAG, "textview_forget_fragment_home : ");
                 Intent intent1 = new Intent(getContext(), SignUpActivity.class);
                 startActivity(intent1);
                 break;
 
             case R.id.button_login_google_fragment_home:
-                Log.d(TAG, "onCreateView()");
+                Log.d(TAG, "button_login_google_fragment_home : ");
 //                MapFragment newFragment = new MapFragment();
 //                Bundle args = new Bundle();
 ////                args.putInt(MapFragment.ARG_POSITION, position);
@@ -209,7 +206,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.button_login_facebook_fragment_home:
-                Log.d(TAG, "onCreateView()");
+                Log.d(TAG, "button_login_facebook_fragment_home : ");
 //                getChildFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_container, getParentFragment()).commit();
 //                break;
 
@@ -217,26 +214,48 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 activity.moveToDetailNotification();
 
             case R.id.floating_button_main_fragment_home:
-                Log.d(TAG, "onCreateView()");
+                Log.d(TAG, "floating_button_main_fragment_home : ");
                 toggleFab();
                 break;
+
+//                if(isFabOpen) isFabOpen = false;
+//                else isFabOpen = true;
+
+                // 디민 값
+//                WindowManager wm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+//                View parent = getView();
+//                WindowManager.LayoutParams p = (WindowManager.LayoutParams) parent.getLayoutParams();
+//                p.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+//                p.dimAmount = 0.4f;
+//                wm.updateViewLayout(parent, p);
 
             case R.id.floating_button_map_fragment_home:
-                Log.d(TAG, "onCreateView()");
-                toggleFab();
+                Log.d(TAG, "floating_button_map_fragment_home : ");
+                SettingsFragment settingsFragment = new SettingsFragment();
+                getChildFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, settingsFragment).commit();
                 break;
 
+            // java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.Class java.lang.Object.getClass()' on a null object reference
+//                getChildFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mMapFragment).commit();
+//                getFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mMapFragment).commit();
+
+
+            //ActivityNotFoundException //Unable to find explicit activity class {com.ds.drawlayout2/com.ds.drawlayout.ui.map.MapFragment}; have you declared this activity in your AndroidManifest.xml?
+//                Intent intent2 = new Intent(getContext(), MapFragment.class);
+//                startActivity(intent2);
+
             case R.id.floating_button_info_fragment_home:
-                Log.d(TAG, "onCreateView()");
+                Log.d(TAG, "R.id.floating_button_info_fragment_home : ");
                 toggleFab();
-                Toast.makeText(getContext(), "Information \n" +
-                        "Motherfucking Open-!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Information \n" + "Motherfucking Open-!", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.button_login_google_new:
-                Log.d(TAG, "onCreateView()");
-                Intent intent2 = new Intent(getContext(), SignInActivity.class);
-                startActivity(intent2);
+                Log.d(TAG, "R.id.button_login_google_new : ");
+                Intent intent4 = new Intent(getContext(), SignInActivity.class);
+                startActivity(intent4);
+                break;
+//                        return true;
 
 //                mSignInActivity.signIn();
 
@@ -259,19 +278,17 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //                fragmentTransaction.commit();
 
-                break;
-
             default:
                 Log.d(TAG, "default()");
+                Toast toast = Toast.makeText(getContext(), "The Service of the \nInformationService Soon will be Generated", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 10);
+                toast.show();
+
 //                Toast toast = new Toast(getContext());
 //                toast.makeText(getContext(), "The Information \nService Soon be Generated", Toast.LENGTH_LONG);
 //                toast.setGravity(Gravity.CENTER, 0, 0);
 //                toast.toString();
 //                toast.show();
-
-                Toast toast = Toast.makeText(getContext(), "The Service of the \nInformationService Soon will be Generated", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.CENTER, 0, 10);
-                toast.show();
 
 ////                toast.setGravity(Gravity.CENTER,0,0);
 //                TextView tv = (TextView) toast.getView();
@@ -297,15 +314,16 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void toggleFab() {
         if (isFabOpen) {
             Log.d(TAG, "if (isFabOpen)");
-            mFloatingActionButtonMain.setClickable(false);
+            mFloatingActionButtonMain.setImageResource(android.R.drawable.ic_input_add);
             mFloatingActionButtonMap.startAnimation(fab_close);
             mFloatingActionButtonInfo.startAnimation(fab_close);
             mFloatingActionButtonMap.setClickable(false);
             mFloatingActionButtonInfo.setClickable(false);
             isFabOpen = false;
+
         } else {
             Log.d(TAG, "else()");
-            mFloatingActionButtonMain.setClickable(false);
+            mFloatingActionButtonMain.setImageResource(android.R.drawable.ic_menu_close_clear_cancel);
             mFloatingActionButtonMap.startAnimation(fab_open);
             mFloatingActionButtonInfo.startAnimation(fab_open);
             mFloatingActionButtonMap.setClickable(true);

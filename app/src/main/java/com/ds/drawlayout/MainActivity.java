@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
 
+import com.ds.drawlayout.ui.main.MainFragment;
 import com.ds.drawlayout.ui.map.MapFragment;
 import com.ds.drawlayout.ui.home.HomeFragment;
 import com.ds.drawlayout.ui.logout.LogoutFragment;
@@ -16,11 +17,13 @@ import com.ds.drawlayout.ui.notification.NotificationFragment;
 import com.ds.drawlayout.ui.settings.SettingsFragment;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.app.ShareCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -33,6 +36,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.ds.drawlayout.databinding.ActivityMainBinding;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.net.URISyntaxException;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private AppBarConfiguration mAppBarConfiguration;
@@ -41,10 +46,11 @@ public class MainActivity extends AppCompatActivity {
     private SettingsFragment mSettingsFragment;
     private MapFragment mMapFragment;
     private NotificationFragment mNotificationFragment;
+    private MainFragment mMainFragment;
+    private LogoutFragment mLogoutFragment;
     private BottomNavigationView mBottomNavigationView;
     public static String userID;
     private FirebaseAnalytics mFirebaseAnalytics;
-
     public Object getData() {
         return userID;
     }
@@ -62,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
         HomeFragment fragobj = new HomeFragment();
         fragobj.setArguments(bundle);
+
+
+        mHomeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_tag);
+        mLogoutFragment = new LogoutFragment();
+        mMainFragment = new MainFragment();
+        mMapFragment = new MapFragment();
+        mNotificationFragment = new NotificationFragment();
+        mSettingsFragment = new SettingsFragment();
 
 //        FragmentManager fm = getChildFragmentManager();
 //        mSettingsFragment = (SettingsFragment) fm.findFragmentById(R.id.recyclerview_settings);
@@ -101,8 +115,15 @@ public class MainActivity extends AppCompatActivity {
 //        appBarConfig = AppBarConfiguration.Builder(R.id.starFragment, R.id.statsFragment, R.id.userFragment)
 //                .setDrawerLayout(drawerLayout)
 //                .build();
+    }
 
 
+    public void onFragmentChanged(int index){
+        if(index == 0){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mSettingsFragment).commit();
+        } else if(index == 1){
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mLogoutFragment).commit();
+        }
     }
 
     public void selectFrag(View view){
@@ -131,11 +152,32 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
+
+                // import com.google.firebase.auth.FirebaseAuth;
+//                String uri = "intent:#Intent;component=com.ds.drawlayout.ui.settings.SettingsFragment;i.data=인트형데이터;end";
+//                String uri = "intent:#Intent;component=com.ds.drawlayout.ui.settings.SettingsFragment;i.data=인트형데이터;end";
+//                Intent intent = new Intent();
+//                try {
+//                    intent = Intent.parseUri(uri, 0);
+//                } catch (URISyntaxException e) {
+//                    e.printStackTrace();
+//                }
+//                startActivity(intent);
+
+////                java.lang.IllegalArgumentException: No view found for id 0x7f0800e5 (com.ds.drawlayout2:id/fragment_container_view_tag) for fragment SettingsFragment{938c735} (fe88f469-fb7a-4eb6-b6f1-a19a631e9b5d id=0x7f0800e5)
+//                onFragmentChanged(0);
+
+//                //IllegalArgumentException: Wrong state class, expecting View State but received class com.google.android.material.navigation.NavigationBarView$SavedState instead. This usually happens when two views of different type have the same id in the same hierarchy. This view's id is id/nav_view_bottom. Make sure other views do not use the same id.
+//                Intent intent = new Intent(getApplication(), SettingsFragment.class);
+//                startActivity(intent);
+//                return true;
+
 //                SettingsFragment settingsFragment = new SettingsFragment();
 //                FragmentManager fragmentManager = getSupportFragmentManager();
 //                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //                fragmentTransaction.commit();
 
+                // IllegalArgumentException: ID does not reference a View inside this Activity
 //                moveToDetailSettings();
 
 //                Intent intent = new Intent(getApplicationContext(), SettingsFragment.class);
@@ -144,16 +186,16 @@ public class MainActivity extends AppCompatActivity {
 
 //                Intent intent = new Intent(getApplicationContext(), SettingsFragment.class);
 //                startActivity(intent);
-//                return true;
-
-                moveToDetailNotification();
 
             case R.id.action_logout:
                 moveToDetailNotification();
+                return true;
+
 //                Intent intent2 = new Intent(getApplicationContext(), LogoutFragment.class);
 //                startActivity(intent2);
 //                onNavigationItemSelected(item);
 //                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -176,14 +218,14 @@ public class MainActivity extends AppCompatActivity {
 //        switch(view.getId()) {
 //            case R.id.action_nav_map_to_notification:
                 NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-                navController.navigate(R.id.action_nav_map_to_notification);
+                navController.navigate(R.id.action_nav_home_to_noti);
 //                break;
 
 //            case R.id.action_nav_notifi_to_setting:
 //                NavController navController1 = Navigation.findNavController(this, R.id.nav_host_fragment_container);
 //                navController1.navigate(R.id.action_nav_notifi_to_setting);
 //                break;
-//
+
 //            case 2:
 //                NavController navController2 = Navigation.findNavController(this, R.id.nav_host_fragment_container);
 //                navController2.navigate(R.id.action_nav_home_to_map);
@@ -192,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void moveToDetailSettings() {
         NavController navController1 = Navigation.findNavController(this, R.id.nav_host_fragment_container);
-        navController1.navigate(R.id.action_nav_notifi_to_setting);
+        navController1.navigate(R.id.action_nav_home_to_setting);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

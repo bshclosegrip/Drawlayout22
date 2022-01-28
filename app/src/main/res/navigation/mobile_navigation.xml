@@ -10,52 +10,51 @@
         android:name="com.ds.drawlayout.ui.main.MainFragment"
         android:label="@string/menu_main"
         tools:layout="@layout/fragment_main" />
+        <action
+            android:id="@+id/action_nav_home_to_map"
+            app:destination="@id/nav_map" />
+        <action
+            android:id="@+id/action_nav_home_to_noti"
+            app:destination="@id/nav_notification" />
+        <action
+            android:id="@+id/action_nav_home_to_logout"
+            app:destination="@id/nav_logout" />
+        <action
+            android:id="@+id/action_nav_home_to_setting"
+            app:destination="@id/nav_settings" />
+        <action
+            android:id="@+id/action_nav_home_to_home"
+            app:destination="@id/nav_home" />
 
     <fragment
         android:id="@+id/nav_home"
         android:name="com.ds.drawlayout.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
-        <action
-            android:id="@+id/action_nav_home_to_map"
-            app:destination="@id/nav_map" />
 
     <fragment
         android:id="@+id/nav_map"
         android:name="com.ds.drawlayout.ui.map.MapFragment"
         android:label="@string/menu_map"
         tools:layout="@layout/fragment_map" />
-        <action
-            android:id="@+id/action_nav_map_to_notification"
-            app:destination="@id/nav_notification" />
 
     <fragment
         android:id="@+id/nav_map_google"
         android:name="com.ds.drawlayout.ui.map.MapGoogleFragment"
         android:label="@string/menu_map_google"
         tools:layout="@layout/fragment_map_google" />
-    <action
-        android:id="@+id/action_nav_map_naver"
-        app:destination="@id/nav_map_naver" />
-
 
     <fragment
         android:id="@+id/nav_map_naver"
         android:name="com.ds.drawlayout.ui.map.MapNaverFragment"
         android:label="@string/menu_map_naver"
         tools:layout="@layout/fragment_notification" />
-        <action
-            android:id="@+id/action_nav_map_google"
-            app:destination="@id/nav_map_google" />
 
     <fragment
         android:id="@+id/nav_notification"
         android:name="com.ds.drawlayout.ui.notification.NotificationFragment"
         android:label="@string/menu_notification"
         tools:layout="@layout/fragment_notification" />
-    <action
-        android:id="@+id/action_nav_notifi_to_setting"
-        app:destination="@id/nav_settings" />
 
     <fragment
         android:id="@+id/nav_settings"
