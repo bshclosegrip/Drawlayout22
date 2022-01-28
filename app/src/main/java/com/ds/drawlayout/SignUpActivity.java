@@ -58,9 +58,9 @@ public class SignUpActivity extends AppCompatActivity {
         mButtonCancel = findViewById( R.id.button_cancel_activity_sign_up );
 
         mAuth = FirebaseAuth.getInstance();
-        findViewById(R.id.button_save_activity_sign_up).setOnClickListener(onClickListener);
-
         mButtonSave.setText(result); // 오늘 날짜로 초기화
+        mButtonSave.setOnClickListener(onClickListener);
+
 //        mButtonSave.setOnClickListener( new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -131,9 +131,10 @@ public class SignUpActivity extends AppCompatActivity {
     private void signUp(){
         String id=((EditText)findViewById(R.id.edittext_id)).getText().toString();
         String password=((EditText)findViewById(R.id.edittext_password)).getText().toString();
+        String userCell = et_cellphone.getText().toString();
 
         if(id.length()>0 && password.length()>0) {
-            if(password.equals(password)){
+//            if(password.equals(password)){
                 mAuth.createUserWithEmailAndPassword(id, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -147,10 +148,10 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             }
                         });
-            }
-            else{
-                Toast.makeText(this, "비밀번호가 일치하지 않습니다." ,Toast.LENGTH_SHORT).show();
-            }
+//            }
+//            else{
+//                Toast.makeText(this, "비밀번호가 일치하지 않습니다." ,Toast.LENGTH_SHORT).show();
+//            }
         }
         else{
             Toast.makeText(this, "아아디와 비밀번호를 확인해주세요." ,Toast.LENGTH_SHORT).show();
