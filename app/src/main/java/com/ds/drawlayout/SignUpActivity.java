@@ -133,7 +133,7 @@ public class SignUpActivity extends AppCompatActivity {
         String password=((EditText)findViewById(R.id.edittext_password)).getText().toString();
         String userCell = et_cellphone.getText().toString();
 
-        if(id.length()>0 && password.length()>0) {
+        if(id.length()>0 && password.length()>0 && userCell.length()>0) {
 //            if(password.equals(password)){
                 mAuth.createUserWithEmailAndPassword(id, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

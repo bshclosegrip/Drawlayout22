@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment fragobj = new HomeFragment();
         fragobj.setArguments(bundle);
 
-
         mHomeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_tag);
         mLogoutFragment = new LogoutFragment();
         mMainFragment = new MainFragment();
