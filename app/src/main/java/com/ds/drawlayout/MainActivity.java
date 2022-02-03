@@ -2,7 +2,12 @@ package com.ds.drawlayout;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -15,15 +20,10 @@ import com.ds.drawlayout.ui.home.HomeFragment;
 import com.ds.drawlayout.ui.logout.LogoutFragment;
 import com.ds.drawlayout.ui.notification.NotificationFragment;
 import com.ds.drawlayout.ui.settings.SettingsFragment;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SearchView;
-import androidx.core.app.ShareCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
     public Object getData() {
         return userID;
     }
+    private NotificationManager mNotificationManager;
+    private static String CHANNEL_ID ="channel1";
+    private static String CHANNEL_NAME="Channel1";
+    private static String CHANNEL_ID2 ="channel2";
+    private static String CHANNEL_NAME2="Channel2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +119,23 @@ public class MainActivity extends AppCompatActivity {
 //        appBarConfig = AppBarConfiguration.Builder(R.id.starFragment, R.id.statsFragment, R.id.userFragment)
 //                .setDrawerLayout(drawerLayout)
 //                .build();
+
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+//                .setSmallIcon(R.drawable.ic_arrow)
+//                .setContentTitle("Title")
+//                .setContentText("클릭하세요")
+//                .setStyle(new NotificationCompat.BigTextStyle()
+//                        .bigText("Much longer text that cannot fit one line..."))
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+//        Notification notification = new Notification.Builder(this, CHANNEL_ID)
+//                .setStyle(new NotificationCompat.MessagingStyle("Me")
+//                        .setConversationTitle("Team lunch")
+//                        .addMessage("Hi", timestamp1, null) // Pass in null for user.
+//                        .addMessage("What's up?", timestamp2, "Coworker")
+//                        .addMessage("Not much", timestamp3, null)
+//                        .addMessage("How about lunch?", timestamp4, "Coworker"))
+//                .build();
     }
 
 
@@ -125,18 +147,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void selectFrag(View view){
+    public void selectFrag(MenuItem view){
         Fragment fr;
-        if(view == findViewById(R.id.button_login_facebook_fragment_home)){
-            fr = new MapFragment();
+        if(view == findViewById(R.id.action_settings)){
+            fr = new SettingsFragment();
         }else {
             fr = new LogoutFragment();
         }
-
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-//        fragmentTransaction.replace(R.id.mapview_fragment_map, getSupportFragmentManager());
-        fragmentTransaction.commit();
+        androidx.fragment.app.FragmentManager fm = getSupportFragmentManager();
+        androidx.fragment.app.FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.fragment_container_view_tag, fr).commit();
     }
 
     @Override
@@ -151,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
+                // IllegalArgumentException: No view found for id 0x7f0800e5 (com.ds.drawlayout2:id/fragment_container_view_tag) for fragment SettingsFragment{e9ed7bc} (4b147e26-f138-42d7-996a-34ea17f2ed71 id=0x7f0800e5)
+//                selectFrag(findViewById(R.id.action_settings));
+                return true;
 
                 // import com.google.firebase.auth.FirebaseAuth;
 //                String uri = "intent:#Intent;component=com.ds.drawlayout.ui.settings.SettingsFragment;i.data=인트형데이터;end";
@@ -276,4 +299,76 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //        return super.onCreateOptionsMenu(menu);
 //    }
+
+    public void showNoti1() {
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        NotificationCompat.Builder builder = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (mNotificationManager.getNotificationChannel(CHANNEL_ID) == null) {
+                mNotificationManager.createNotificationChannel(new NotificationChannel(
+                        CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT
+                ));
+
+                builder = new NotificationCompat.Builder(this, CHANNEL_ID);
+            }
+        } else {
+            builder = new NotificationCompat.Builder(this);
+        }
+
+        builder.setContentTitle("간단 알림");
+        builder.setContentText("알림 메시지입니다.");
+        builder.setSmallIcon(android.R.drawable.ic_menu_view);
+        Notification noti = builder.build();
+
+        mNotificationManager.notify(1, noti);
+    }
+
+    public void showNoti2() {
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        NotificationCompat.Builder builder = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (mNotificationManager.getNotificationChannel(CHANNEL_ID2) == null) {
+                mNotificationManager.createNotificationChannel(new NotificationChannel(
+                        CHANNEL_ID2, CHANNEL_NAME2, NotificationManager.IMPORTANCE_DEFAULT
+                ));
+
+                builder = new NotificationCompat.Builder(this, CHANNEL_ID2);
+            }
+        } else {
+            builder = new NotificationCompat.Builder(this);
+        }
+
+        Intent intent = new Intent(this, MainActivity.class);
+        //PendingIntent 객체 만들기
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 101, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        builder.setContentTitle("간단 알림");
+        builder.setContentText("알림 메시지입니다.");
+        builder.setSmallIcon(android.R.drawable.ic_menu_view);
+        builder.setAutoCancel(true);
+        //빌더에 PendingIntent 객체 설정하기
+        builder.setContentIntent(pendingIntent);
+
+        Notification noti = builder.build();
+
+        mNotificationManager.notify(2, noti);
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 }

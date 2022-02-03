@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textSize="30sp"
-        android:text="로그인 성공"
+        android:text="Log In Progress \nOn Going..."
         android:elevation="2dp"
         />
 

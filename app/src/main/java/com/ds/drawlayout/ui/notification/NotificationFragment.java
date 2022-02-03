@@ -1,5 +1,9 @@
 package com.ds.drawlayout.ui.notification;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,7 +27,6 @@ import java.util.ArrayList;
 
 public class NotificationFragment extends Fragment implements View.OnClickListener {
     private final static String TAG = "NotificationFragment";
-    private NotificationViewModel notificationViewModel;
     private FragmentNotificationBinding binding;
     private TextView mTextView;
     private RecyclerView mRecyclerView2;
@@ -44,6 +48,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setItemPrefetchEnabled(true);
         mRecyclerView2.setLayoutManager(llm);
+
 
         for(int i=1;i<=10;i++){
             if(i%2==0) {

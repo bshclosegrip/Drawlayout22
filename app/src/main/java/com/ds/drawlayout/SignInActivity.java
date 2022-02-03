@@ -1,8 +1,5 @@
 package com.ds.drawlayout;
 
-import static android.content.ContentValues.TAG;
-
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,9 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -33,12 +27,13 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 public class SignInActivity extends AppCompatActivity {
+    private static final String TAG = "SignInActivity";
 //    private EditText et_id, et_pass;
 //    private Button btn_login, btn_register;
     private static final int RC_SIGN_IN = 123;
-    private static final String TAG = "SignInActivity";
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
 
@@ -136,11 +131,11 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser currentUser) {
-//        FirebaseUser user = mAuth.getCurrentUser();
-//        if (user != null) {
-//            String name = user.getDisplayName();
-//            String email = user.getEmail();
-//            String photo = String.valueOf(user.getPhotoUrl());
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            String photo = String.valueOf(user.getPhotoUrl());
 
 //            text.append("Info : \n");
 //            text.append(name + "\n");
@@ -148,13 +143,13 @@ public class SignInActivity extends AppCompatActivity {
 //            Picasso.get().load(photo).into(image);
 //            btn_logout.setVisibility(View.VISIBLE);
 //            btn_login.setVisibility(View.INVISIBLE);
-
+//
 //        } else {
-//            text.setText("Firebase Login \n");
+//            mTextVie.setText("Firebase Login \n");
 //            Picasso.get().load(R.drawable.ic_firebase_logo).into(image);
 //            btn_logout.setVisibility(View.INVISIBLE);
 //            btn_login.setVisibility(View.VISIBLE);
-//        }
+        }
     }
 
     private void firebaseAuthWithGoogle(String idToken) {

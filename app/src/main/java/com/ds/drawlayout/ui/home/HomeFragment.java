@@ -144,6 +144,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                 Log.d(TAG, "button_signin : ");
                 Intent intentSignIn = new Intent(getContext(), SignInActivity.class);
                 startActivity(intentSignIn);
+                break;
 
 //                String userID = mEditTextId.getText().toString();
 //                String userPass = mEditTextPassword.getText().toString();
@@ -232,9 +233,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             case R.id.floating_button_map_fragment_home:
                 Log.d(TAG, "floating_button_map_fragment_home : ");
-                SettingsFragment settingsFragment = new SettingsFragment();
-                getChildFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, settingsFragment).commit();
+                toggleFab();
                 break;
+
+                //IllegalArgumentException: No view found for id 0x7f0800e5 (com.ds.drawlayout2:id/fragment_container_view_tag) for fragment SettingsFragment{9f5551d} (6728447d-5505-4cbe-9e1b-d0a166f6b864 id=0x7f0800e5)
+//                SettingsFragment settingsFragment = new SettingsFragment();
+//                getChildFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, settingsFragment).commit();
 
             // java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.Class java.lang.Object.getClass()' on a null object reference
 //                getChildFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mMapFragment).commit();
