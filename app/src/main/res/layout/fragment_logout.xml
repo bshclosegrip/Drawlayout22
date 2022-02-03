@@ -58,9 +58,9 @@
         android:textAllCaps="false"
         android:textSize="20sp" />
 
-    <View
-        android:id="@+id/view_logout"
-        android:layout_width="wrap_content"
+    <WebView
+        android:id="@+id/webview_fragment_logout"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/button_cancel_logout"

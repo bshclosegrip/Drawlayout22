@@ -2,11 +2,14 @@ package com.ds.drawlayout.ui.logout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,7 +26,7 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
     private TextView mTextView, mTexViewOfProgressbar;
     private ProgressBar mProgressBar;
     private Button mButton;
-    private View mView;
+    private WebView mWebView;
     private FragmentLogoutBinding mBinding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,7 +37,20 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
         mTextView = root.findViewById(R.id.text_logout);
         mTexViewOfProgressbar = root.findViewById(R.id.textview_of_progressbar_fragment_logout);
         mProgressBar = root.findViewById(R.id.progressbar_logout);
-        mView = root.findViewById(R.id.view_logout);
+        mWebView = root.findViewById(R.id.webview_fragment_logout);
+//        WebView mWebView = new WebView(getActivity());
+//        setContentView(mWebView);
+        mWebView.loadUrl("http://www.google.com");
+
+//        String unencodedHtml =
+//                "&lt;html&gt;&lt;body&gt;'%23' is the percent code for ‘#‘ &lt;/body&gt;&lt;/html&gt;";
+//        String encodedHtml = Base64.encodeToString(unencodedHtml.getBytes(),
+//                Base64.NO_PADDING);
+//        mWebView.loadData(encodedHtml, "text/html", "base64");
+
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
 //        mView.OnTouchListener(getView(), null);
         mProgressBar = new ProgressBar(getContext());
         mProgressBar.setProgress(50);
