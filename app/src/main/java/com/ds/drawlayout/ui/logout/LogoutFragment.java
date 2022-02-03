@@ -68,7 +68,7 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
                         Toast.makeText(getContext(), "검색", Toast.LENGTH_LONG).show();
                         break;
                 }
-                return true`;
+                return true;
             }
         });
         mWebView = root.findViewById(R.id.webview_fragment_logout);
