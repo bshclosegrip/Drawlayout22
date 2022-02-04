@@ -31,7 +31,7 @@ import java.util.Date;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final String TAG = "SignUpActivity";
-    private EditText et_id, et_pass, et_cellphone;
+    private EditText et_id, et_pass, et_pass_confirm, et_cellphone;
     private Button mButtonSave, mButtonCancel;
     private DatePicker mDatePicker;
     private final int requestCodeSignUpActivity = 3;
@@ -52,6 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView( R.layout.activity_sign_up );
         et_id = findViewById( R.id.edittext_id );
         et_pass = findViewById( R.id.edittext_password );
+        et_pass_confirm = findViewById( R.id.edittext_password_confirm );
         et_cellphone = findViewById( R.id.edittext_cellphone_number);
         mDatePicker = findViewById(R.id.date_picker);
         mButtonSave = findViewById( R.id.button_save_activity_sign_up );
@@ -64,7 +65,7 @@ public class SignUpActivity extends AppCompatActivity {
 //        mButtonSave.setOnClickListener( new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                Log.d(TAG,"onClick()");
+//                Log.d(TAG, "onClick()");
 //                String userID = et_id.getText().toString();
 //                String userPass = et_id.getText().toString();
 //                String userCell = et_cellphone.getText().toString();
@@ -81,6 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
 //                    @Override
 //                    public void onResponse(String response) {
 //                        try {
+//                            mAuth.createUserWithEmailAndPassword(userID, userPass);
 //                            Log.d(TAG,"try()");
 //                            JSONObject jsonObject = new JSONObject();
 //                            boolean success = jsonObject.getBoolean( "success" );
@@ -129,29 +131,32 @@ public class SignUpActivity extends AppCompatActivity {
     };
 
     private void signUp(){
-        String id=((EditText)findViewById(R.id.edittext_id)).getText().toString();
-        String password=((EditText)findViewById(R.id.edittext_password)).getText().toString();
-        String userCell = et_cellphone.getText().toString();
+//        String id=((EditText)findViewById(R.id.edittext_id)).getText().toString();
+        String id = et_id.getText().toString();
+        String password = et_pass.getText().toString();
+        String passwrodConfirm = et_pass_confirm.getText().toString();
+//        String userCell = et_cellphone.getText().toString();
 
-        if(id.length()>0 && password.length()>0 && userCell.length()>0) {
-//            if(password.equals(password)){
+        if(id.length()>0 && password.length()>0) {
+            if(password.equals(passwrodConfirm)){
                 mAuth.createUserWithEmailAndPassword(id, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "회원가입에 성공했습니다." ,Toast.LENGTH_SHORT).show();
+                                    finish();
                                 } else {
-                                    if(task.getException().toString() !=null){
+                                    if(task.getException().toString() != null){
                                         Toast.makeText(getApplicationContext(), "회원가입에 실패했습니다." ,Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
                         });
-//            }
-//            else{
-//                Toast.makeText(this, "비밀번호가 일치하지 않습니다." ,Toast.LENGTH_SHORT).show();
-//            }
+                    }
+            else {
+                Toast.makeText(this, "비밀번호가 일치하지 않습니다." ,Toast.LENGTH_SHORT).show();
+            }
         }
         else{
             Toast.makeText(this, "아아디와 비밀번호를 확인해주세요." ,Toast.LENGTH_SHORT).show();

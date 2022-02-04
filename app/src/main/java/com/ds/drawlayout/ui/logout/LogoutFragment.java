@@ -28,8 +28,10 @@ import androidx.fragment.app.Fragment;
 
 import com.ds.drawlayout.MainActivity;
 import com.ds.drawlayout.R;
+import com.ds.drawlayout.SignInActivity;
 import com.ds.drawlayout.databinding.FragmentLogoutBinding;
 import com.ds.drawlayout.ui.map.MapFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -48,6 +50,7 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
     private EditText mEditText;
     private Handler mHandler;
     private MainActivity mMainActivity;
+    private FirebaseAuth mAuth;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView()");
@@ -60,13 +63,17 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
         mButtonGo = root.findViewById(R.id.button_url_go);
         mEditText = root.findViewById(R.id.edittext_url);
         mEditText.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+        mEditText.setImeOptions(EditorInfo.IME_ACTION_GO);
         mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 switch(getId()) {
                     case EditorInfo.IME_ACTION_SEARCH:
-                        Toast.makeText(getContext(), "검색", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "이동 중", Toast.LENGTH_LONG).show();
                         break;
+                    default:
+                        Toast.makeText(getContext(), "기본", Toast.LENGTH_LONG).show();
+                        return false;
                 }
                 return true;
             }
@@ -92,7 +99,6 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
         mButtonGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // HTTP 로 요청을 보낸다. Thread 작업이 필요함
                 new Thread(new Runnable() {
                     @Override
@@ -212,6 +218,11 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
                 Log.d(TAG, "button_cancel_logout");
 //                mButton.performClick();
                 mButton.setVisibility(View.GONE);
+
+                Intent intent = new Intent(getContext(), SignInActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                mAuth.signOut();
 
 //                Intent intent = new Intent(getContext(), MapFragment.class);
 //                intent.getData();

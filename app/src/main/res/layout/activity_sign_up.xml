@@ -44,6 +44,15 @@
             android:inputType="textWebPassword"
             android:padding="10dp"
             tools:ignore="MissingConstraints" />
+        <EditText
+            android:id="@+id/edittext_password_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/hint_password"
+            android:inputType="textWebPassword"
+            android:padding="10dp"
+            tools:ignore="MissingConstraints" />
         <DatePicker
             android:id="@+id/date_picker"
             android:overScrollMode="always"

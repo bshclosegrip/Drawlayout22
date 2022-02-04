@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#000000">
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:id="@+id/linearLayout_fragment_gallery"
@@ -22,11 +22,11 @@
             android:textAllCaps="false"
             android:layout_weight="0.5"/>
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_naver_map_fragment_gallery"
+            android:id="@+id/button_kakao_map_fragment_gallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/bin_button_login"
-            android:text="Naver Map"
+            android:text="Kakao Map"
             android:textStyle="bold"
             android:textAllCaps="false"
             android:layout_weight="0.5"

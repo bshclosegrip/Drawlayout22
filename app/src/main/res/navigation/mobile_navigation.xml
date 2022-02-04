@@ -45,10 +45,10 @@
         tools:layout="@layout/fragment_map_google" />
 
     <fragment
-        android:id="@+id/nav_map_naver"
-        android:name="com.ds.drawlayout.ui.map.MapNaverFragment"
-        android:label="@string/menu_map_naver"
-        tools:layout="@layout/fragment_notification" />
+        android:id="@+id/nav_map_kakao"
+        android:name="com.ds.drawlayout.ui.map.MapKakaoFragment"
+        android:label="@string/menu_map_kakao"
+        tools:layout="@layout/fragment_map_kakao" />
 
     <fragment
         android:id="@+id/nav_notification"

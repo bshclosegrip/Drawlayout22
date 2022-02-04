@@ -1,14 +1,21 @@
 package com.ds.drawlayout;
 
+import static android.app.Notification.EXTRA_NOTIFICATION_ID;
+
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.RemoteInput;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
@@ -24,6 +31,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -37,9 +45,17 @@ import com.ds.drawlayout.databinding.ActivityMainBinding;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.net.URISyntaxException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private static final String KEY_TEXT_REPLY = "key_text_reply";
+    private static String CHANNEL_ID ="channel1";
+    private static String CHANNEL_NAME="Channel1";
+    private static String CHANNEL_ID2 ="channel2";
+    private static String CHANNEL_NAME2="Channel2";
+
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding mBinding ;
     private HomeFragment mHomeFragment;
@@ -55,10 +71,6 @@ public class MainActivity extends AppCompatActivity {
         return userID;
     }
     private NotificationManager mNotificationManager;
-    private static String CHANNEL_ID ="channel1";
-    private static String CHANNEL_NAME="Channel1";
-    private static String CHANNEL_ID2 ="channel2";
-    private static String CHANNEL_NAME2="Channel2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,14 +132,6 @@ public class MainActivity extends AppCompatActivity {
 //                .setDrawerLayout(drawerLayout)
 //                .build();
 
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-//                .setSmallIcon(R.drawable.ic_arrow)
-//                .setContentTitle("Title")
-//                .setContentText("클릭하세요")
-//                .setStyle(new NotificationCompat.BigTextStyle()
-//                        .bigText("Much longer text that cannot fit one line..."))
-//                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
 //        Notification notification = new Notification.Builder(this, CHANNEL_ID)
 //                .setStyle(new NotificationCompat.MessagingStyle("Me")
 //                        .setConversationTitle("Team lunch")
@@ -136,8 +140,79 @@ public class MainActivity extends AppCompatActivity {
 //                        .addMessage("Not much", timestamp3, null)
 //                        .addMessage("How about lunch?", timestamp4, "Coworker"))
 //                .build();
+
+        Intent intent = new Intent(this, SignUpActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        String replyLabel = getResources().getString(R.string.reply_label);
+        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
+                .setLabel(replyLabel)
+                .build();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_arrow)
+                .setContentTitle("Title")
+                .setContentText("Context for Text")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("클릭하세요..."))
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(getTaskId(), builder.build());
+        
+//        String replyLabel = getResources().getString(R.string.reply_label);
+//        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
+//                .setLabel(replyLabel)
+//                .build();
+//
+//        PendingIntent replyPendingIntent =
+//                PendingIntent.getBroadcast(getApplicationContext(),
+//                        conversation.getConversationId(),
+//                        getMessageReplyIntent(conversation.getConversationId()),
+//                        PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        NotificationCompat.Action action =
+//                new NotificationCompat.Action.Builder(R.drawable.ic_menu_camera,
+//                        getString(R.string.hide_bottom_view_on_scroll_behavior), replyPendingIntent)
+//                        .addRemoteInput(remoteInput)
+//                        .build();
+//
+//        Notification newMessageNotification = new Notification.Builder(getApplicationContext(), CHANNEL_ID)
+//                .setSmallIcon(R.drawable.ic_menu_camera)
+//                .setContentTitle("답장하기")
+//                .setContentText(getString(R.string.content))
+//                .addAction(action)
+//                .build();
+//
+//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//        notificationManager.notify(getTaskId(), newMessageNotification);
+
+        getHashKey();
     }
 
+    private void getHashKey(){
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (packageInfo == null)
+            Log.e("KeyHash", "KeyHash:null");
+
+        for (Signature signature : packageInfo.signatures) {
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            } catch (NoSuchAlgorithmException e) {
+                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
+            }
+        }
+    }
 
     public void onFragmentChanged(int index){
         if(index == 0){

@@ -64,7 +64,7 @@ public class MapFragment extends Fragment {
 //        mGoogleMap = (GoogleMap) root.findViewById(mMapView);
 //        mGoogleMap = root.findViewById(R.id.map);
         mButtonGoogleMap = root.findViewById(R.id.button_google_map_fragment_gallery);
-        mButtonNaverMap = root.findViewById(R.id.button_naver_map_fragment_gallery);
+        mButtonNaverMap = root.findViewById(R.id.button_kakao_map_fragment_gallery);
         mViewPager = root.findViewById(R.id.viewpager_fragment_gallery);
         mViewPager.setAdapter(new pagerAdapter(getChildFragmentManager()));
         mViewPager.setCurrentItem(0);
@@ -124,7 +124,7 @@ public class MapFragment extends Fragment {
                     return new MapGoogleFragment();
                 case 1:
                     Log.d(TAG, "case 1");
-                    return new MapNaverFragment();
+                    return new MapKakaoFragment();
                 default:
                     Log.d(TAG, "default");
                     return null;

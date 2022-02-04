@@ -131,11 +131,17 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser currentUser) {
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            String photo = String.valueOf(user.getPhotoUrl());
+        if(currentUser != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        if (user != null) {
+//            String name = user.getDisplayName();
+//            String email = user.getEmail();
+//            String photo = String.valueOf(user.getPhotoUrl());
 
 //            text.append("Info : \n");
 //            text.append(name + "\n");
@@ -149,7 +155,7 @@ public class SignInActivity extends AppCompatActivity {
 //            Picasso.get().load(R.drawable.ic_firebase_logo).into(image);
 //            btn_logout.setVisibility(View.INVISIBLE);
 //            btn_login.setVisibility(View.VISIBLE);
-        }
+//        }
     }
 
     private void firebaseAuthWithGoogle(String idToken) {

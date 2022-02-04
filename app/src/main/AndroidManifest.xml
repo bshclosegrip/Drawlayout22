@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_app_icon"
         android:supportsRtl="true"
         android:usesCleartextTraffic="false"
+        android:testOnly="true"
         android:theme="@style/Theme.Drawlayout">
         <activity
             android:name=".SignInActivity"
@@ -37,5 +38,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBgK-SuEddjmoeP661Ls5Rbt5_3sU1kwUE2" />
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="6c909fbdbec96686252e0a66dbd21539" />
+
     </application>
 </manifest>
