@@ -27,6 +27,7 @@ import com.ds.drawlayout.ui.home.HomeFragment;
 import com.ds.drawlayout.ui.logout.LogoutFragment;
 import com.ds.drawlayout.ui.notification.NotificationFragment;
 import com.ds.drawlayout.ui.settings.SettingsFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -390,12 +391,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             builder = new NotificationCompat.Builder(this);
         }
-
         builder.setContentTitle("간단 알림");
         builder.setContentText("알림 메시지입니다.");
         builder.setSmallIcon(android.R.drawable.ic_menu_view);
         Notification noti = builder.build();
-
         mNotificationManager.notify(1, noti);
     }
 

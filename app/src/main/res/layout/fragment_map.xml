@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bin_button_google"
             android:text="Google Map"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:textAllCaps="false"
             android:layout_weight="0.5"/>
@@ -25,8 +26,9 @@
             android:id="@+id/button_kakao_map_fragment_gallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bin_button_login"
+            android:background="@drawable/bin_button_kakao"
             android:text="Kakao Map"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:textAllCaps="false"
             android:layout_weight="0.5"

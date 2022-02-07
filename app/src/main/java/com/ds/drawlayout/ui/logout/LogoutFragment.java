@@ -222,6 +222,7 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
                 Intent intent = new Intent(getContext(), SignInActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
 
 //                Intent intent = new Intent(getContext(), MapFragment.class);

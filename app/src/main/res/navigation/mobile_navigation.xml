@@ -67,4 +67,10 @@
         android:name="com.ds.drawlayout.ui.logout.LogoutFragment"
         android:label="@string/menu_logout"
         tools:layout="@layout/fragment_logout" />
+
+    <fragment
+        android:id="@+id/nav_media"
+        android:name="com.ds.drawlayout.ui.media.MediaFragment"
+        android:label="@string/menu_media"
+        tools:layout="@layout/fragment_media" />
 </navigation>

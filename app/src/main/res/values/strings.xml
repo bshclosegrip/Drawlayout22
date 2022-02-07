@@ -16,6 +16,7 @@
     <string name="menu_notification">Notification</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_logout">Log Out</string>
+    <string name="menu_media">Media</string>
 
     <string name="logout_textview">Logout Processing</string>
     <string name="logout_button_cancel">Cancel Logout</string>

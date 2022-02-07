@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/drawable-v24/bin_button_kakao.xml" value="0.1984375" />
+        <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/drawable-v24/bin_button_login.xml" value="0.1984375" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/drawable/bin_button_facebook.xml" value="0.22083333333333333" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/drawable/bin_button_google.xml" value="0.22083333333333333" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/drawable/bin_button_login.xml" value="0.22083333333333333" />
+        <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/drawable/ic_menu_camera.xml" value="0.221875" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/activity_main.xml" value="0.28532608695652173" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/activity_sign_in.xml" value="0.2046875" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/activity_sign_up.xml" value="0.2046875" />
@@ -18,6 +21,7 @@
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_map_google.xml" value="0.19375" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_map_kakao.xml" value="0.2046875" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_map_naver.xml" value="0.19375" />
+        <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_media.xml" value="0.20572916666666666" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_settings.xml" value="0.3342391304347826" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/item_viewpager2.xml" value="0.19739583333333333" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/items_recyclerview.xml" value="0.2046875" />
