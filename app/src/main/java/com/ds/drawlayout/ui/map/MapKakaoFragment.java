@@ -35,10 +35,10 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MapKakaoFragment extends Fragment {
     private final String TAG = "MapKakaoFragment";
-    public String KakaoMapAPI = "카카오 API Key";
+    public String KakaoMapAPI = "API";
     private FragmentMapKakaoBinding mBinding;
-    private MapView mMapView;
     private MapPoint mMapPoint;
+    private MapView mMapView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -86,30 +86,30 @@ public class MapKakaoFragment extends Fragment {
         mBinding = FragmentMapKakaoBinding.inflate(inflater, container, false);
         View root = mBinding.getRoot();
 
-        mMapView = root.findViewById(R.id.mapview_fragment_map_kakao);
+//        mMapView = root.findViewById(R.id.mapview_fragment_map_kakao);
 
 //        mMapView = new MapView(root.getContext());
 
         // NullPointerException
 //        mMapView = new MapView(root.findFocus().getContext());
 
-//        ViewGroup mapViewContainer = (ViewGroup) root.findViewById(R.id.mapview_fragment_map_kakao);
+//        ViewGroup mapViewContainer = (ViewGroup) mMapView.findViewById(R.id.mapview_fragment_map_kakao);
 //        mapViewContainer.addView(mMapView);
 
-        getKeyHash(getContext());
-        mMapView.setDaumMapApiKey(KakaoMapAPI);
-        mMapView.removeAllPOIItems();
-        Marker("도코", 139.6917064, 35.6894875);
-        MapMarker("붓싼", "출발", 128.7384361, 34.8799083 );
-
-        Handler mHandler = new Handler();
-        mHandler.postDelayed( new Runnable() {
-            public void run() {
-                // 3초 후에 현재위치를 받아오도록 설정 , 바로 시작 시 에러납니다.
-                mMapView.setCurrentLocationTrackingMode( MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading );
-                }
-            }, 4000); // 1000 = 1초
-        LocationManager lm = (LocationManager) getContext().getSystemService( Context.LOCATION_SERVICE );
+//        getKeyHash(getContext());
+//        mMapView.setDaumMapApiKey(KakaoMapAPI);
+//        mMapView.removeAllPOIItems();
+//        Marker("도코", 139.6917064, 35.6894875);
+//        MapMarker("붓싼", "출발", 128.7384361, 34.8799083 );
+//
+//        Handler mHandler = new Handler();
+//        mHandler.postDelayed( new Runnable() {
+//            public void run() {
+//                // 3초 후에 현재위치를 받아오도록 설정 , 바로 시작 시 에러납니다.
+//                mMapView.setCurrentLocationTrackingMode( MapView.CurrentLocationTrackingMode.TrackingModeOnWithHeading );
+//                }
+//            }, 4000); // 1000 = 1초
+//        LocationManager lm = (LocationManager) getContext().getSystemService( Context.LOCATION_SERVICE );
 
         return root;
     }

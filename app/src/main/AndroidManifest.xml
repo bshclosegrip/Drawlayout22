@@ -40,7 +40,7 @@
             android:value="AIzaSyBgK-SuEddjmoeP661Ls5Rbt5_3sU1kwUE2" />
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="6c909fbdbec96686252e0a66dbd21539" />
+            android:value="6c909fbdbec96686252e0a66dbd215392" />
 
     </application>
 </manifest>
