@@ -20,17 +20,20 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.ds.drawlayout.ui.main.MainFragment;
 import com.ds.drawlayout.ui.map.MapFragment;
 import com.ds.drawlayout.ui.home.HomeFragment;
 import com.ds.drawlayout.ui.logout.LogoutFragment;
+import com.ds.drawlayout.ui.media.MediaFragment;
 import com.ds.drawlayout.ui.notification.NotificationFragment;
 import com.ds.drawlayout.ui.settings.SettingsFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
@@ -43,13 +46,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.ds.drawlayout.databinding.ActivityMainBinding;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.net.URISyntaxException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String TAG = "MainActivity";
     private static final String KEY_TEXT_REPLY = "key_text_reply";
     private static String CHANNEL_ID ="channel1";
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     private NotificationFragment mNotificationFragment;
     private MainFragment mMainFragment;
     private LogoutFragment mLogoutFragment;
+    private MediaFragment mMediaFragment;
     private BottomNavigationView mBottomNavigationView;
     public static String userID;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -72,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         return userID;
     }
     private NotificationManager mNotificationManager;
+    private TabLayout mTabLayout;
+    private static View v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,42 +94,117 @@ public class MainActivity extends AppCompatActivity {
         HomeFragment fragobj = new HomeFragment();
         fragobj.setArguments(bundle);
 
-        mHomeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_tag);
+//        mHomeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_tag);
+        mHomeFragment = new HomeFragment();
         mLogoutFragment = new LogoutFragment();
         mMainFragment = new MainFragment();
         mMapFragment = new MapFragment();
         mNotificationFragment = new NotificationFragment();
         mSettingsFragment = new SettingsFragment();
 
+//        mTabLayout = findViewById(R.id.tab_layout_appbar);
+//        mTabLayout.addTab(mTabLayout.newTab().setText("친구"));
+//        mTabLayout.addTab(mTabLayout.newTab().setText("채팅"));
+//        mTabLayout.addTab(mTabLayout.newTab().setText("더보기"));
+//        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                int position = tab.getPosition();
+//                Fragment selected = null;
+//                if(position == 0)
+//                    selected = mSettingsFragment;
+//                else if(position == 1)
+//                    selected = mHomeFragment;
+//                else if(position == 2)
+//                    selected = mLogoutFragment;
+//                // NullPointerException: Attempt to invoke virtual method 'java.lang.Class java.lang.Object.getClass()' on a null object reference
+//                getSupportFragmentManager().beginTransaction().replace(R.id.container, selected).commit();
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//
+//            }
+//        });
+
 //        FragmentManager fm = getChildFragmentManager();
 //        mSettingsFragment = (SettingsFragment) fm.findFragmentById(R.id.recyclerview_settings);
+
         DrawerLayout drawer = mBinding.drawerLayout;
         NavigationView navigationView = mBinding.navView;
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_map, R.id.nav_notification, R.id.nav_settings, R.id.nav_logout)
+                R.id.nav_home, R.id.nav_map, R.id.nav_notification, R.id.nav_settings, R.id.nav_logout, R.id.nav_meida, R.id.nav_info, R.id.navi_home, R.id.navi_chatting, R.id.navi_map, R.id.navi_myinfo)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         navController.getGraph();
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
-//        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view_bottom);
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+//        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view_bottom);
+//        mBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+//            Fragment selectedFragment = null;
+//            switch (item.getItemId()) {
+//                case R.id.navi_home:
+//                    selectedFragment = mSettingsFragment;
+//                    break;
+//                case R.id.navi_map:
+//                    selectedFragment = mMapFragment;
+//                    break;
+//                case R.id.navi_chatting:
+//                    selectedFragment = mNotificationFragment;
+//                    break;
+//                case R.id.navi_myinfo:
+//                    selectedFragment = mMediaFragment;
+//                    break;
+//            }
+////            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            if (selectedFragment != null) {
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, selectedFragment).commit();
+//            }
+//            return true;
+//        });
+
+//        mBottomNavigationView.setOnClickListener(new MenuItem.OnMenuItemClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                switch (view.getId()) {
+//                    case R.id.navi_home:
+//                        MainActivity activity = (MainActivity) getActivity();
+//                        activity.onFragmentChanged(0);
+//                    case R.id.navi_map:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mMapFragment).commit();
+//                    case R.id.navi_chatting:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mNotificationFragment).commit();
+//                    case R.id.navi_myinfo:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mSettingsFragment).commit();
+//                }
+//            }
+//        });
+
+//        // NullPointerException: Attempt to invoke virtual method 'void com.google.android.material.bottomnavigation.BottomNavigationView.setOnNavigationItemSelectedListener(com.google.android.material.bottomnavigation.BottomNavigationView$OnNavigationItemSelectedListener)' on a null object reference
+//        mBottomNavigationView = findViewById(R.id.nav_view_bottom);
+//        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 //            @Override
 //            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 //                switch (item.getItemId()) {
 //                    case R.id.navi_home:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mHomeFragment).commit();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, mHomeFragment).commit();
 //                        mHomeFragment.setArguments(bundle);
 //                        return true;
 //                    case R.id.navi_map:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mMapFragment).commit();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mMapFragment).commit();
 //                        return true;
 //                    case R.id.navi_chatting:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mNotificationFragment).commit();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mNotificationFragment).commit();
 //                        return true;
 //                    case R.id.navi_myinfo:
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mSettingsFragment).commit();
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mSettingsFragment).commit();
 //                        return true;
 //                }
 //            return false;
@@ -142,27 +224,27 @@ public class MainActivity extends AppCompatActivity {
 //                        .addMessage("How about lunch?", timestamp4, "Coworker"))
 //                .build();
 
-        Intent intent = new Intent(this, SignUpActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        String replyLabel = getResources().getString(R.string.reply_label);
-        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
-                .setLabel(replyLabel)
-                .build();
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_arrow)
-                .setContentTitle("Title")
-                .setContentText("Context for Text")
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("클릭하세요..."))
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(getTaskId(), builder.build());
+//        Intent intent = new Intent(this, SignUpActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+//
+//        String replyLabel = getResources().getString(R.string.reply_label);
+//        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
+//                .setLabel(replyLabel)
+//                .build();
+//
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+//                .setSmallIcon(R.drawable.ic_arrow)
+//                .setContentTitle("Title")
+//                .setContentText("Context for Text")
+//                .setStyle(new NotificationCompat.BigTextStyle()
+//                        .bigText("클릭하세요..."))
+//                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+//                .setContentIntent(pendingIntent)
+//                .setAutoCancel(true);
+//
+//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//        notificationManager.notify(getTaskId(), builder.build());
         
 //        String replyLabel = getResources().getString(R.string.reply_label);
 //        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
@@ -215,14 +297,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void onFragmentChanged(int index){
-        if(index == 0){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mSettingsFragment).commit();
-        } else if(index == 1){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_view_tag, mLogoutFragment).commit();
-        }
-    }
-
     public void selectFrag(MenuItem view){
         Fragment fr;
         if(view == findViewById(R.id.action_settings)){
@@ -243,12 +317,49 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void onFragmentChanged(int index) {
+            if (index == 0) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mSettingsFragment).commit();
+                getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                // bsh
+                onDestroyView();
+            } else if (index == 1) {
+                // null error // fixed : new LogoutFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mLogoutFragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                onDestroyView();
+            } else if (index == 2) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mHomeFragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                onDestroyView();
+            } else if (index == 3) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mMainFragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                onDestroyView();
+
+            } else if (index == 4) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mNotificationFragment).addToBackStack(null).commit();
+                getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                onDestroyView();
+            }
+    }
+
+    public void onDestroyView() {
+        if(v!=null){
+            ViewGroup parent = (ViewGroup)v.getParent();
+            if(parent!=null){
+                parent.removeView(v);
+            }
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
                 // IllegalArgumentException: No view found for id 0x7f0800e5 (com.ds.drawlayout2:id/fragment_container_view_tag) for fragment SettingsFragment{e9ed7bc} (4b147e26-f138-42d7-996a-34ea17f2ed71 id=0x7f0800e5)
 //                selectFrag(findViewById(R.id.action_settings));
+                onFragmentChanged(0);
                 return true;
 
                 // import com.google.firebase.auth.FirebaseAuth;
@@ -286,8 +397,10 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(intent);
 
             case R.id.action_logout:
-                moveToDetailNotification();
+                onFragmentChanged(1);
                 return true;
+
+//                moveToDetailNotification();
 
 //                Intent intent2 = new Intent(getApplicationContext(), LogoutFragment.class);
 //                startActivity(intent2);
@@ -301,14 +414,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        Log.d(TAG, "onSupportNavigateUp()");
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        Log.d(TAG, "onSupportNavigateUp() : navController = " + navController + ", mAppBarConfiguration = " + mAppBarConfiguration);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
     @Override
     protected void onDestroy() {
-        Log.d(TAG, "onSupportNavigateUp()");
+        Log.d(TAG, "onDestroy()");
         super.onDestroy();
     }
 
@@ -339,13 +452,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.navi_chatting) {
-
+            Intent intent = new Intent(this, NotificationFragment.class);
+            startActivity(intent);
         } else if (id == R.id.navi_home) {
-
+            Intent intent = new Intent(this, HomeFragment.class);
+            startActivity(intent);
         } else if (id == R.id.navi_map) {
-
+            Intent intent = new Intent(this, MapFragment.class);
+            startActivity(intent);
         } else if (id == R.id.navi_myinfo) {
-
+            Intent intent = new Intent(this, SignUpActivity.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -378,7 +495,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void showNoti1() {
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-
         NotificationCompat.Builder builder = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (mNotificationManager.getNotificationChannel(CHANNEL_ID) == null) {

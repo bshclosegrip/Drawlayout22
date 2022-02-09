@@ -83,7 +83,7 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
 //        WebView mWebView = new WebView(getActivity());
 //        setContentView(mWebView);
 
-        // when https : usesCleartextTraffic="false" || when http : usesCleartextTraffic="true"
+        // https "false" || http "true"
         mWebView.loadUrl("https://www.google.com");
 
 //        String unencodedHtml =
@@ -99,22 +99,15 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
         mButtonGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // HTTP 로 요청을 보낸다. Thread 작업이 필요함
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        // 작업시작
                         String url = mEditText.getText().toString();
                         try {
-                            //요청을 보낼 URL 인스턴스 정보
                             URL httpURL = new URL(url);
-                            // 요청을 보내기 위한 준비를 한다.( 요청을 보내기 전)
                             HttpURLConnection conn = (HttpURLConnection) httpURL.openConnection();
-
                             conn.setDoInput(true);
                             conn.setDoOutput(true);
-
-                            // 최대 요청 지연 시간, 요청이 5초 이상 걸릴 경우 요청을 끊는다.
                             conn.setConnectTimeout(5000);
 
                             /**
@@ -122,33 +115,14 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
                              * POST 요청을 원할 경우 "POST"라고 작성한다.
                              */
                             conn.setRequestMethod("GET");
-
-                            // 요청을 보내고, 동시에 응답을 받는다.
                             int responseCode = conn.getResponseCode();
-
-                            // 요청과 응답이 제대로 이루어졌는지 검사한다.
-                            // HttpURLConnection.HTTP_OK : 응답이 200 OK 라는 의미이다.
                             if( responseCode == HttpURLConnection.HTTP_OK ){
-                                // 응답 본문 전체를 닫는다.
                                 final StringBuffer responseBody = new StringBuffer();
-
-                                // 응답 본문의 한줄 한줄씩 얻어온다.
                                 String line  = null;
-
-                                /**
-                                 * 응답 본문을 담고 있는 InputStream 을 얻어온다.
-                                 * BufferedReader 는 InputStream 한줄 씩 얻어올 수 있는 객체다.
-                                 */
                                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
                                 while ( (line = reader.readLine()) != null ){
-                                    // 응답 본문이 종료될 때 까지 반복한다.
-
-                                    // 응답 본문 한줄씩 결과 객체에 담는다.
-                                    // 줄바꿈을 위해서 매 라인 끝마다 "\n"을 더해준다.
                                     responseBody.append(line + "\n");
                                 }
-                                // 연결을 순차적으로 끊는다.
                                 reader.close();
                                 conn.disconnect();
 
@@ -219,9 +193,10 @@ public class LogoutFragment extends Fragment implements View.OnClickListener, Vi
 //                mButton.performClick();
                 mButton.setVisibility(View.GONE);
 
-                Intent intent = new Intent(getContext(), SignInActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
+//                Intent intent = new Intent(getContext(), SignInActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+
                 mAuth = FirebaseAuth.getInstance();
                 mAuth.signOut();
 

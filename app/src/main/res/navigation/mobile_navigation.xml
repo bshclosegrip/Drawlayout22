@@ -17,14 +17,20 @@
             android:id="@+id/action_nav_home_to_noti"
             app:destination="@id/nav_notification" />
         <action
-            android:id="@+id/action_nav_home_to_logout"
-            app:destination="@id/nav_logout" />
+        android:id="@+id/action_nav_home_to_logout"
+        app:destination="@id/nav_logout" />
         <action
-            android:id="@+id/action_nav_home_to_setting"
-            app:destination="@id/nav_settings" />
+        android:id="@+id/action_nav_home_to_setting"
+        app:destination="@id/nav_settings" />
         <action
-            android:id="@+id/action_nav_home_to_home"
-            app:destination="@id/nav_home" />
+        android:id="@+id/action_nav_home_to_home"
+        app:destination="@id/nav_home" />
+        <action
+        android:id="@+id/action_nav_home_to_media"
+        app:destination="@id/nav_media" />
+        <action
+        android:id="@+id/action_nav_home_to_info"
+        app:destination="@id/nav_info" />
 
     <fragment
         android:id="@+id/nav_home"
@@ -73,4 +79,10 @@
         android:name="com.ds.drawlayout.ui.media.MediaFragment"
         android:label="@string/menu_media"
         tools:layout="@layout/fragment_media" />
+
+    <fragment
+        android:id="@+id/nav_info"
+        android:name="com.ds.drawlayout.ui.info.InfoFragment"
+        android:label="@string/menu_Info"
+        tools:layout="@layout/fragment_info" />
 </navigation>

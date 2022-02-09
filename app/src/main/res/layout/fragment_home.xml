@@ -55,6 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@drawable/bin_button_login"
+            android:textStyle="bold"
+
             android:text="@string/btn_login"
             android:textColor="@color/white" />
 
@@ -64,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/bin_button_login"
+            android:textStyle="bold"
             android:text="@string/btn_register"
             android:textColor="@color/white" />
 
@@ -76,24 +79,26 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_login_facebook_fragment_home"
                 android:layout_weight="0.5"
+                android:layout_width="match_parent"
                 android:text="Login wtih Facebook"
                 android:layout_marginRight="10dp"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:background="@drawable/bin_button_facebook"
-                android:layout_width="match_parent"
+                android:textStyle="bold"
                 android:onClick="selectFrag"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_login_google_fragment_home"
                 android:layout_weight="0.5"
+                android:layout_width="match_parent"
                 android:text="Login with Google"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
                 android:background="@drawable/bin_button_google"
                 android:onClick="selectFrag"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.gms.common.SignInButton

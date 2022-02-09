@@ -15,6 +15,7 @@
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/app_bar_main.xml" value="0.2046875" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/content_main.xml" value="0.2046875" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_home.xml" value="0.2046875" />
+        <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_info.xml" value="0.31023550724637683" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_logout.xml" value="0.2046875" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_main.xml" value="0.19739583333333333" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_map.xml" value="0.20104166666666667" />
@@ -22,7 +23,8 @@
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_map_kakao.xml" value="0.2046875" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_map_naver.xml" value="0.19375" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_media.xml" value="0.20572916666666666" />
-        <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_settings.xml" value="0.3342391304347826" />
+        <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_notification.xml" value="0.31023550724637683" />
+        <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/fragment_settings.xml" value="0.17864583333333334" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/item_viewpager2.xml" value="0.19739583333333333" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/items_recyclerview.xml" value="0.2046875" />
         <entry key="..\:/downloads/AndroidProject_Copy/Drawlayout2/app/src/main/res/layout/nav_bottom_main.xml" value="0.2046875" />

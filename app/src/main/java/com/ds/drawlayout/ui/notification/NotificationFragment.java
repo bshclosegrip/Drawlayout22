@@ -49,7 +49,6 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         llm.setItemPrefetchEnabled(true);
         mRecyclerView2.setLayoutManager(llm);
 
-
         for(int i=1;i<=10;i++){
             if(i%2==0) {
                 Log.d(TAG, "if(i%2==0)");

@@ -46,6 +46,7 @@ public class MapFragment extends Fragment {
     private String mData, ARG_POSITION;
     private int position = 0;
     private FloatingActionButton mFloatingActionButton;
+    private MainActivity mMainActivitiy;
 
     public MapFragment() {
         // required
@@ -89,13 +90,30 @@ public class MapFragment extends Fragment {
         Bundle extra = getArguments();
         if(extra != null){
             mData = extra.getString("data2");
-
         }
 
         mFloatingActionButton = root.findViewById(R.id.floating_button_fragment_map);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("From MapFragment", "MapFragment의 번들데이터");
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                SettingsFragment settingsFragment = new SettingsFragment();
+                settingsFragment.setArguments(bundle);
+                transaction.replace(R.id.viewpager_fragment_gallery, settingsFragment);
+                transaction.commit();
+
+//                mMainActivitiy = new MainActivity();
+//                mMainActivitiy.onFragmentChanged(1);
+
+//                // NullPointerException: Attempt to invoke virtual method 'void com.ds.drawlayout.MainActivity.onFragmentChanged(int)' on a null object reference
+//                mMainActivitiy.onFragmentChanged(0);
+
+//                // recycler overlap error
+//                MainActivity activity = (MainActivity) getActivity();
+//                activity.onFragmentChanged(R.id.nav_settings);
+
 //                MainActivity activity = (MainActivity) getActivity();
 //                activity.moveToDetailSettings();
 //                Fragment fragment = new NotificationFragment();
@@ -105,6 +123,7 @@ public class MapFragment extends Fragment {
 //                transaction.commit();
 
 //                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, mFloatingActionButton).commit();
+
             }
         });
         return root;
