@@ -36,10 +36,9 @@
     <string name="btn_logout">로그아웃</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank dsfsfd</string>
-    <string name="default_web_client_ids">lemonade08</string>
-
+    <string name="default_web_client_ids">423736681431–2ub0u5tdrl0o2df7m7m7i777lms89b6g.apps.googleusercontent.com</string>
     <string name="channel_name">Status Bar Noti</string>
-    <string name="channel_description">Message1</string>
+    <string name="channel_description">Message 1</string>
     <string name="reply_label">감사합니다. || 아조까세요.</string>
     <string name="content">답장 내용 : </string>
 </resources>

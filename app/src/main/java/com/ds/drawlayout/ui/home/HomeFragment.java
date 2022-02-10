@@ -27,6 +27,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.ds.drawlayout.ChatActivity;
 import com.ds.drawlayout.MainActivity;
 import com.ds.drawlayout.R;
 import com.ds.drawlayout.SignInActivity;
@@ -224,6 +225,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
             case R.id.floating_button_map_fragment_home:
                 Log.d(TAG, "floating_button_map_fragment_home : ");
+                startActivity(new Intent(getContext(), ChatActivity.class));
                 toggleFab();
                 break;
 

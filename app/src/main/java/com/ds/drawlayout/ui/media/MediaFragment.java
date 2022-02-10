@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatSeekBar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -35,6 +36,7 @@ public class MediaFragment extends Fragment {
     private AppCompatSeekBar mSeekbar;
     private MediaViewModel mMediaViewModel;
     private TextView mTextView;
+    private ConstraintLayout mConstraintLayout;
 
     final int max = 5;
     final float min = (float) 0.1;
@@ -47,6 +49,7 @@ public class MediaFragment extends Fragment {
         mMediaViewModel = new ViewModelProvider(this).get(MediaViewModel.class);
         binding = FragmentMediaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        mConstraintLayout = root.findViewById(R.id.constraint_layout_fragment_media);
         mVideoView = root.findViewById(R.id.video_view);
         mButton = root.findViewById(R.id.button_start_video);
         mSeekbar = (AppCompatSeekBar) root.findViewById(R.id.seekbar_video);

@@ -28,11 +28,12 @@
             <item
                 android:id="@+id/nav_meida"
                 android:icon="@android:drawable/ic_media_play"
-                android:title="@string/menu_media" />
+                android:title="@string/menu_media"
+                android:checkable="true" />
             <item
                 android:id="@+id/nav_info"
                 android:icon="@android:drawable/ic_menu_info_details"
-                android:title="Info" />
+                android:title="@string/menu_Info" />
     </group>
 
 </menu>

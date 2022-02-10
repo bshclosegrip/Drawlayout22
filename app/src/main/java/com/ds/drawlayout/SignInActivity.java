@@ -142,7 +142,7 @@ public class SignInActivity extends AppCompatActivity {
 //            String name = user.getDisplayName();
 //            String email = user.getEmail();
 //            String photo = String.valueOf(user.getPhotoUrl());
-
+//
 //            text.append("Info : \n");
 //            text.append(name + "\n");
 //            text.append(email);

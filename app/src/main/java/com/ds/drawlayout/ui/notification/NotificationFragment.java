@@ -3,6 +3,7 @@ package com.ds.drawlayout.ui.notification;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ds.drawlayout.ChatActivity;
 import com.ds.drawlayout.MainActivity;
 import com.ds.drawlayout.R;
 import com.ds.drawlayout.adapter.RecyclerviewAdapter;
@@ -44,6 +46,7 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
         mRecyclerView2.setAdapter(mRecyclerviewAdapter);
         mRecyclerView2.setHasFixedSize(true);
         mRecyclerView2.setItemAnimator(null);
+        mRecyclerView2.setOnClickListener(this::onClick);
         mRecyclerItemList = new ArrayList<>();
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setItemPrefetchEnabled(true);
@@ -76,7 +79,12 @@ public class NotificationFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-        MainActivity activity = (MainActivity) getActivity();
-        activity.moveToDetailSettings();
+//        MainActivity activity = (MainActivity) getActivity();
+//        activity.moveToDetailSettings();
+        switch (view.getId()) {
+            default:
+            Log.d(TAG, "onClick : switch (view.getId())");
+//                startActivity(new Intent(getContext(), ChatActivity.class));
+        }
     }
 }
