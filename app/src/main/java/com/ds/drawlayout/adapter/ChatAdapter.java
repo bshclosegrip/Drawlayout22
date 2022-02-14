@@ -47,7 +47,6 @@ public class ChatAdapter extends BaseAdapter {
         View itemView=null;
 
         // no glide problem
-        // but  i love you and added
         if(item.getName().equals(G.nickName)){
             itemView = layoutInflater.inflate(R.layout.box_message_right,viewGroup,false);
         }else{

@@ -41,4 +41,8 @@
     <string name="channel_description">Message 1</string>
     <string name="reply_label">감사합니다. || 아조까세요.</string>
     <string name="content">답장 내용 : </string>
+
+    <string name="compose_shortcut_short_label1">Compose Short Label</string>
+    <string name="compose_shortcut_long_label1">Compose Long Label</string>
+    <string name="compose_disabled_message1">Compose Disabled</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.ds.drawlayout.ui.map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.ds.drawlayout.MainActivity;
 import com.ds.drawlayout.R;
+import com.ds.drawlayout.SignUpActivity;
 import com.ds.drawlayout.databinding.FragmentMapBinding;
 import com.ds.drawlayout.ui.home.HomeFragment;
 import com.ds.drawlayout.ui.notification.NotificationFragment;
@@ -96,13 +98,18 @@ public class MapFragment extends Fragment {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("From MapFragment", "MapFragment의 번들데이터");
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                SettingsFragment settingsFragment = new SettingsFragment();
-                settingsFragment.setArguments(bundle);
-                transaction.replace(R.id.viewpager_fragment_gallery, settingsFragment);
-                transaction.commit();
+                Log.d(TAG, "onClick : FAB");
+                startActivity(new Intent(getContext(), SignUpActivity.class));
+
+//                Bundle bundle = new Bundle();
+//                bundle.putString("From MapFragment", "MapFragment의 번들데이터");
+//                onDestroyView();
+//                onDestroy();
+//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                SettingsFragment settingsFragment = new SettingsFragment();
+//                settingsFragment.setArguments(bundle);
+//                transaction.replace(R.id.viewpager_fragment_gallery, settingsFragment);
+//                transaction.commit();
 
 //                mMainActivitiy = new MainActivity();
 //                mMainActivitiy.onFragmentChanged(1);
@@ -128,6 +135,12 @@ public class MapFragment extends Fragment {
         });
         return root;
     }
+
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        binding = null;
+//    }
 
     private class pagerAdapter extends FragmentStatePagerAdapter {
         public pagerAdapter(FragmentManager fm)

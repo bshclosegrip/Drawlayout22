@@ -8,20 +8,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.RequestQueue;
@@ -34,13 +29,8 @@ import com.ds.drawlayout.SignInActivity;
 import com.ds.drawlayout.SignInRequest;
 import com.ds.drawlayout.SignUpActivity;
 import com.ds.drawlayout.databinding.FragmentHomeBinding;
-import com.ds.drawlayout.ui.logout.LogoutFragment;
 import com.ds.drawlayout.ui.map.MapFragment;
-import com.ds.drawlayout.ui.notification.NotificationFragment;
-import com.ds.drawlayout.ui.settings.SettingsFragment;
-import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;

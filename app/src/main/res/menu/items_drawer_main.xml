@@ -26,7 +26,7 @@
                 android:icon="@android:drawable/ic_delete"
                 android:title="@string/menu_logout" />
             <item
-                android:id="@+id/nav_meida"
+                android:id="@+id/nav_media"
                 android:icon="@android:drawable/ic_media_play"
                 android:title="@string/menu_media"
                 android:checkable="true" />

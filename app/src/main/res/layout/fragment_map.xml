@@ -42,8 +42,6 @@
         android:layout_below="@+id/linearLayout_fragment_gallery"
         android:layout_marginTop="@dimen/fab_margin"
         android:layout_marginBottom="80dp">
-
-
     </androidx.viewpager.widget.ViewPager>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

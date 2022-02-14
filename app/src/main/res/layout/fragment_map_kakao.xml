@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.map.MapKakaoFragment">
 
-    <LinearLayout
+    <net.daum.mf.map.api.MapView
         android:id="@+id/mapview_fragment_map_kakao"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

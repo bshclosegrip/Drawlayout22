@@ -32,6 +32,7 @@ public class MediaFragment extends Fragment {
     private FragmentMediaBinding binding;
     private VideoView mVideoView;
     public static String url = "http://sites.google.com/site/ubiaccessmobile/sample_video.mp4";
+//    public static String url = null;
     private Button mButton;
     private AppCompatSeekBar mSeekbar;
     private MediaViewModel mMediaViewModel;
@@ -42,41 +43,56 @@ public class MediaFragment extends Fragment {
     final float min = (float) 0.1;
     final float step = (float) 0.1;
     final String str_title = "SeekBar : ";
+    private boolean isPrepared = false;
+    private boolean isTouch = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView()");
-        mMediaViewModel = new ViewModelProvider(this).get(MediaViewModel.class);
+//        mMediaViewModel = new ViewModelProvider(this).get(MediaViewModel.class);
         binding = FragmentMediaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         mConstraintLayout = root.findViewById(R.id.constraint_layout_fragment_media);
         mVideoView = root.findViewById(R.id.video_view);
+        mTextView = root.findViewById(R.id.textView_seekbar_index);
         mButton = root.findViewById(R.id.button_start_video);
-        mSeekbar = (AppCompatSeekBar) root.findViewById(R.id.seekbar_video);
+        mSeekbar = root.findViewById(R.id.seekbar_video);
+//        mSeekbar = root.findViewById(R.id.seekbar_video);
 //        mSeekbar.setOnClickListener(this::onClick);
 
         setSeekBarMax(mSeekbar, max);
         mSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
+                Log.d(TAG, "onProgressChanged()");
                 setSeekBarChange(progress, mTextView);
+                mTextView.setText(String.valueOf(progress));
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                Log.d(TAG, "onStartTrackingTouch()");
+                mTextView.setText("트래킹 시작");
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                Log.d(TAG, "onStopTrackingTouch()");
+                mTextView.setText("트래킹 종료");
+                isTouch =false;
             }
         });
+
         setSeekBarAnimation(mSeekbar);
 
         MediaController controller = new MediaController(getContext());
+        // NullPointerException: Attempt to invoke virtual method 'void android.widget.VideoView.setMediaController(android.widget.MediaController)' on a null object reference
         mVideoView.setMediaController(controller);
         mVideoView.setVideoURI(Uri.parse(url));
         mVideoView.requestFocus();
         mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
+                Log.d(TAG, "onPrepared()");
+                mediaPlayer.start();
                 Toast.makeText(getContext(), "동영상 준비됨.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -84,13 +100,13 @@ public class MediaFragment extends Fragment {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick(View view)");
+                Log.d(TAG, "mButton : onClick(View view)");
                 mVideoView.seekTo(0); // 처음 위치로
                 mVideoView.start();
             }
         });
 
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        return inflater.inflate(R.layout.fragment_media, container, false);
     }
 
 //    public void setMediaController(){
@@ -106,18 +122,20 @@ public class MediaFragment extends Fragment {
 //    }
 
     private void setSeekBarMax(AppCompatSeekBar sb, int max_value) {
+        Log.d(TAG, "setSeekBarMax");
         sb.setMax((int)((max_value-min) / step));
     }
 
     private void setSeekBarChange(int progress, TextView tv) {
+        Log.d(TAG, "setSeekBarChange");
         float value = min + (progress * step);
         DecimalFormat format = new DecimalFormat(".#");
         String str = format.format(value);
-        tv.setText(str_title +" ( "+Float.valueOf(str)+" )");
+        mTextView.setText(str_title +" ( "+Float.valueOf(str)+" )");
     }
 
-    // 최초 중간 위치 설정
     private void setSeekBarAnimation(AppCompatSeekBar sb) {
+        Log.d(TAG, "setSeekBarAnimation");
         int progress_half = (int)(((max / min) / 2)-1);
         ObjectAnimator animation = ObjectAnimator.ofInt(sb, "progress", progress_half);
         animation.setDuration(100); // 0.5 second

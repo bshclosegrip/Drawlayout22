@@ -110,7 +110,7 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
-//        loadData();
+        loadData();
     }
 
     public void clickSend(View view) {
@@ -202,9 +202,9 @@ public class ChatActivity extends AppCompatActivity {
     }
 
 //    //내 phone에 저장되어 있는 프로필정보 읽어오기
-//    void loadData(){
-//        SharedPreferences preferences=getSharedPreferences("account",MODE_PRIVATE);
-//        G.nickName=preferences.getString("nickName", null);
-//        G.porfileUrl=preferences.getString("profileUrl", null);
-//    }
+    void loadData(){
+        SharedPreferences preferences=getSharedPreferences("account",MODE_PRIVATE);
+        G.nickName=preferences.getString("nickName", null);
+        G.porfileUrl=preferences.getString("profileUrl", null);
+    }
 }

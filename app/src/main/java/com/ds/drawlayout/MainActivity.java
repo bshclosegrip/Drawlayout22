@@ -10,6 +10,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.RemoteInput;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TabLayout mTabLayout;
     private static View v;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,11 +97,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bundle.putString("edttext", "From Activity");
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-        HomeFragment fragobj = new HomeFragment();
-        fragobj.setArguments(bundle);
 
 //        mHomeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container_view_tag);
         mHomeFragment = new HomeFragment();
+        mHomeFragment.setArguments(bundle);
         mLogoutFragment = new LogoutFragment();
         mMainFragment = new MainFragment();
         mMapFragment = new MapFragment();
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = mBinding.drawerLayout;
         NavigationView navigationView = mBinding.navView;
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_map, R.id.nav_notification, R.id.nav_settings, R.id.nav_logout, R.id.nav_meida, R.id.nav_info, R.id.navi_home, R.id.navi_chatting, R.id.navi_map, R.id.navi_myinfo)
+                R.id.nav_home, R.id.nav_map, R.id.nav_notification, R.id.nav_settings, R.id.nav_logout, R.id.nav_media, R.id.nav_info /*R.id.navi_home, R.id.navi_chatting, R.id.navi_map, R.id.navi_myinfo*/)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -228,14 +229,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                        .addMessage("How about lunch?", timestamp4, "Coworker"))
 //                .build();
 
-//        Intent intent = new Intent(this, SignUpActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-//
-//        String replyLabel = getResources().getString(R.string.reply_label);
-//        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
-//                .setLabel(replyLabel)
-//                .build();
+        Intent intent = new Intent(this, SignUpActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        String replyLabel = getResources().getString(R.string.reply_label);
+        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
+                .setLabel(replyLabel)
+                .build();
 //
 //        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
 //                .setSmallIcon(R.drawable.ic_arrow)
@@ -565,4 +566,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+//    private void ShortcutIcon(){
+//        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+//        boolean shortCutWasAlreadyAdded = sharedPreferences.getBoolean(PREF_KEY_SHORTCUT_ADDED, false);
+//        if (shortCutWasAlreadyAdded) return;
+//        Intent shortcutIntent = new Intent(getApplicationContext(), MainActivity.class);
+//        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//
+//        Intent addIntent = new Intent();
+//        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent);
+//        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME,getResources().getString(R.string.app_name));
+//        addIntent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, Intent.ShortcutIconResource.fromContext(getApplicationContext(), R.mipmap.ic_launcher));
+//        addIntent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+//        getApplicationContext().sendBroadcast(addIntent);
+//
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.commit();
+//    }
 }
