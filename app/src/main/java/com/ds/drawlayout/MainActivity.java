@@ -9,22 +9,31 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.RemoteInput;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ToggleButton;
 
+import com.ds.drawlayout.adapter.RecyclerviewAdapter;
 import com.ds.drawlayout.ui.main.MainFragment;
 import com.ds.drawlayout.ui.map.MapFragment;
 import com.ds.drawlayout.ui.home.HomeFragment;
@@ -84,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NotificationManager mNotificationManager;
     private TabLayout mTabLayout;
     private static View v;
-
+    private RecyclerviewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +159,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navController.getGraph();
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        ToggleButton mAccountToggle = (ToggleButton) findViewById(R.id.account_view_icon_button);
+        // RuntimeException: Unable to start activity ComponentInfo{com.ds.drawlayout2/com.ds.drawlayout.MainActivity}: java.lang.NullPointerException: Attempt to invoke virtual method 'void android.widget.ToggleButton.setOnCheckedChangeListener(android.widget.CompoundButton$OnCheckedChangeListener)' on a null object reference
+//        mAccountToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+////                mAdapter.setUseAccountMode(isChecked);
+//            }
+//        });
 
 //        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.nav_view_bottom);
 //        mBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -327,6 +345,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mSettingsFragment).commit();
                 getSupportFragmentManager().beginTransaction().addToBackStack(null);
                 // bsh
+                Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                if(Build.VERSION.SDK_INT >= 26) {
+                    vib.vibrate(VibrationEffect.createOneShot(1000,10));
+                }else {
+                    vib.vibrate(1000);
+                }
                 onDestroyView();
             } else if (index == 1) {
                 // null error // fixed : new LogoutFragment();
@@ -421,6 +445,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         Log.d(TAG, "onSupportNavigateUp() : navController = " + navController + ", mAppBarConfiguration = " + mAppBarConfiguration);
+
+        // no ringtone
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone ringtone = RingtoneManager.getRingtone(getApplicationContext(), uri);
+        ringtone.play();
+
+        // no media
+        MediaPlayer player = MediaPlayer.create(getApplicationContext(), R.raw.sample_video);
+        player.start();
+
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 

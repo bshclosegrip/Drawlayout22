@@ -27,7 +27,6 @@ public class Viewpager2Adapter extends RecyclerView.Adapter<Viewpager2Adapter.Vi
         void onItemClick(View v, int position) ;
     }
 
-    // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener ;
     }
@@ -45,11 +44,11 @@ public class Viewpager2Adapter extends RecyclerView.Adapter<Viewpager2Adapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = holder.name.getText().toString(); //holder로 가져온 값을 변수에 넣기
-                Intent intent;//인텐트 선언
-                intent = new Intent(mContext, MapFragment.class); //look_memo.class부분에 원하는 화면 연결
-                intent.putExtra("mname", name); //변수값 인텐트로 넘기기
-                mContext.startActivity(intent); //액티비티 열기
+                String name = holder.name.getText().toString();
+                Intent intent;
+                intent = new Intent(mContext, MapFragment.class);
+                intent.putExtra("mname", name);
+                mContext.startActivity(intent);
             }
         });
     }
