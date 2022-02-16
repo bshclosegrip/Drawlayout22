@@ -2,6 +2,7 @@ package com.ds.drawlayout;
 
 import static android.app.Notification.EXTRA_NOTIFICATION_ID;
 
+import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.Notification;
@@ -29,6 +30,7 @@ import android.view.MenuItem;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ToggleButton;
@@ -160,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        ToggleButton mAccountToggle = (ToggleButton) findViewById(R.id.account_view_icon_button);
+//        ToggleButton mAccountToggle = (ToggleButton) findViewById(R.id.account_view_icon_button);
         // RuntimeException: Unable to start activity ComponentInfo{com.ds.drawlayout2/com.ds.drawlayout.MainActivity}: java.lang.NullPointerException: Attempt to invoke virtual method 'void android.widget.ToggleButton.setOnCheckedChangeListener(android.widget.CompoundButton$OnCheckedChangeListener)' on a null object reference
 //        mAccountToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -619,4 +621,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //        SharedPreferences.Editor editor = sharedPreferences.edit();
 //        editor.commit();
 //    }
+
 }

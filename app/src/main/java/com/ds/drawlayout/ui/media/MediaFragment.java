@@ -1,18 +1,21 @@
 package com.ds.drawlayout.ui.media;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSeekBar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import android.os.Vibrator;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.TextureView;
@@ -20,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -29,6 +33,7 @@ import android.widget.VideoView;
 import com.ds.drawlayout.R;
 import com.ds.drawlayout.databinding.FragmentMediaBinding;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class MediaFragment extends Fragment {
@@ -44,6 +49,15 @@ public class MediaFragment extends Fragment {
     private ConstraintLayout mConstraintLayout;
     private TextureView mTextureView;
 
+    private MediaRecorder mMediaRecorder = null;
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private static String fileName = null;
+    private RecordButton recordButton = null;
+    private MediaRecorder recorder = null;
+    private PlayButton playButton = null;
+    private MediaPlayer player = null;
+    private boolean permissionToRecordAccepted = false;
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
 
     final int max = 5;
     final float min = (float) 0.1;
@@ -74,11 +88,7 @@ public class MediaFragment extends Fragment {
 
         MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), R.raw.sample_video);
         mediaPlayer.start();
-
-
-
         MediaController controller = new MediaController(getContext());
-
         // NullPointerException: Attempt to invoke virtual method 'void android.widget.VideoView.setMediaController(android.widget.MediaController)' on a null object reference
         mVideoView.setMediaController(controller);
         mVideoView.setVideoURI(Uri.parse(url));
@@ -129,6 +139,7 @@ public class MediaFragment extends Fragment {
                 Log.d(TAG, "mButton : onClick(View view)");
                 mVideoView.seekTo(0); // 처음 위치로
                 mVideoView.start();
+
             }
         });
 
@@ -153,6 +164,33 @@ public class MediaFragment extends Fragment {
         });
         setSeekBarMax(mSeekbar, max);
         setSeekBarAnimation(mSeekbar);
+
+
+
+//        ContextWrapper m = new ContextWrapper(getActivity());
+//        fileName = m.getExternalCacheDir().getAbsolutePath();
+//        //    java.lang.RuntimeException: Stub!
+//        fileName += "/audiorecordtest.3gp";
+//        recordButton = root.findViewById(R.id.button_record_start);
+//        recorder = null;
+//        playButton = root.findViewById(R.id.button_record_liston);
+//        player = null;
+
+//        ActivityCompat.requestPermissions(getActivity(), permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+//        ConstraintLayout ll = new ConstraintLayout(getContext());
+//        recordButton = new RecordButton(getContext());
+//        ll.addView(recordButton,
+//                new LinearLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        0));
+//        playButton = new PlayButton(getContext());
+//        ll.addView(playButton,
+//                new LinearLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        0));
+//        setContentView(ll);
 
 //        return inflater.inflate(R.layout.fragment_media, container, false);
         return root;
@@ -191,4 +229,132 @@ public class MediaFragment extends Fragment {
         animation.setInterpolator(new /*DecelerateInterpolator()*/LinearInterpolator());
         animation.start();
     }
+
+    private void onRecord(boolean start) {
+        if (start) {
+            startRecording();
+        } else {
+            stopRecording();
+        }
+    }
+
+    private void onPlay(boolean start) {
+        if (start) {
+            startPlaying();
+        } else {
+            stopPlaying();
+        }
+    }
+
+    private void startPlaying() {
+        player = new MediaPlayer();
+        try {
+            player.setDataSource(fileName);
+            player.prepare();
+            player.start();
+        } catch (IOException e) {
+            Log.e(TAG, "prepare() failed");
+        }
+    }
+
+    private void stopPlaying() {
+        player.release();
+        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_2_TS);
+        player = null;
+    }
+
+    private void startRecording() {
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setOutputFile(fileName);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            recorder.prepare();
+        } catch (IOException e) {
+            Log.e(TAG, "prepare() failed");
+        }
+
+        recorder.start();
+    }
+
+    private void stopRecording() {
+        recorder.stop();
+        recorder.release();
+        recorder = null;
+    }
+
+    //  ClassCastException: androidx.appcompat.widget.AppCompatButton cannot be cast to com.ds.drawlayout.ui.media.MediaFragment$RecordButton
+//    class RecordButton extends androidx.appcompat.widget.AppCompatButton {
+    class RecordButton extends AppCompatButton {
+        boolean mStartRecording = true;
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onRecord(mStartRecording);
+                if (mStartRecording) {
+                    setText("Stop recording");
+                } else {
+                    setText("Start recording");
+                }
+                mStartRecording = !mStartRecording;
+            }
+        };
+
+        public RecordButton(Context ctx) {
+            super(ctx);
+            setText("Start recording");
+            setOnClickListener(clicker);
+        }
+    }
+
+    // ClassCastException: androidx.appcompat.widget.AppCompatButton cannot be cast to com.ds.drawlayout.ui.media.MediaFragment$RecordButton
+//    class PlayButton extends androidx.appcompat.widget.AppCompatButton {
+    class PlayButton extends AppCompatButton {
+        boolean mStartPlaying = true;
+        OnClickListener clicker = new OnClickListener() {
+            public void onClick(View v) {
+                onPlay(mStartPlaying);
+                if (mStartPlaying) {
+                    setText("Stop playing");
+                } else {
+                    setText("Start playing");
+                }
+                mStartPlaying = !mStartPlaying;
+            }
+        };
+
+        public PlayButton(Context ctx) {
+            super(ctx);
+            setText("Start playing");
+            setOnClickListener(clicker);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (recorder != null) {
+            recorder.release();
+            recorder = null;
+        }
+
+        if (player != null) {
+            player.release();
+            player = null;
+        }
+    }
+
+//    private File ContextWrapper.getExternalCacheDir() {
+//        //    java.lang.RuntimeException: Stub!
+//        throw new RuntimeException("Stub!");
+//    }
+//
+//    public File[] getExternalCacheDirs() {
+//        throw new RuntimeException("Stub!");
+//    }
+//
+//    public File[] getExternalMediaDirs() {
+//        throw new RuntimeException("Stub!");
+//    }
 }

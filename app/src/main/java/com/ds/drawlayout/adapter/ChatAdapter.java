@@ -44,27 +44,25 @@ public class ChatAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         ChatItemData item = messageItems.get(position);
-        View itemView=null;
+        View itemView = null;
 
         // no glide problem
-        if(item.getName().equals(G.nickName)){
-            itemView = layoutInflater.inflate(R.layout.box_message_right,viewGroup,false);
-        }else{
-            itemView = layoutInflater.inflate(R.layout.box_message_right,viewGroup,false);
-        }
+        // NullPointerException: Attempt to invoke virtual method 'boolean java.lang.String.equals(java.lang.Object)' on a null object reference
+//        if(item.getName().equals(G.nickName)){
+//            itemView = layoutInflater.inflate(R.layout.box_message_right,viewGroup,false);
+//        }else{
+//            itemView = layoutInflater.inflate(R.layout.box_message_right,viewGroup,false);
+//        }
 
-        //만들어진 itemView에 값들 설정
+        itemView = layoutInflater.inflate(R.layout.box_message_right,viewGroup,false);
         CircleImageView iv= itemView.findViewById(R.id.iv);
         TextView tvName= itemView.findViewById(R.id.tv_name);
         TextView tvMsg= itemView.findViewById(R.id.tv_msg);
         TextView tvTime= itemView.findViewById(R.id.tv_time);
-
         tvName.setText(item.getName());
         tvMsg.setText(item.getMessage());
         tvTime.setText(item.getTime());
-
         Glide.with(itemView).load(item.getPofileUrl()).into(iv);
-
         return itemView;
     }
 }
