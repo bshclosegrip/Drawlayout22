@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -119,12 +121,33 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+    // To Save
+    public void savePref() {
+        SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(gson);
+        prefsEditor.putString("Save MyObject", json);
+        prefsEditor.commit();
+    }
+
+    // To Retrieve
+    public void retrievePref() {
+        SharedPreferences mPrefs = getPreferences(MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = mPrefs.getString("Retrieve MyObject", "");
+        SignUpActivity obj = gson.fromJson(json, SignUpActivity.class);
+    }
+
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.button_save_activity_sign_up:
                     signUp();
+                    break;
+                default:
+                    finish();
                     break;
             }
         }
@@ -134,20 +157,22 @@ public class SignUpActivity extends AppCompatActivity {
 //        String id=((EditText)findViewById(R.id.edittext_id)).getText().toString();
         String id = et_id.getText().toString();
         String password = et_pass.getText().toString();
-        String passwrodConfirm = et_pass_confirm.getText().toString();
+        String passwordConfirm = et_pass_confirm.getText().toString();
 //        String userCell = et_cellphone.getText().toString();
 
         if(id.length()>0 && password.length()>0) {
-            if(password.equals(passwrodConfirm)){
+            if(password.equals(passwordConfirm)){
                 mAuth.createUserWithEmailAndPassword(id, password)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "회원가입에 성공했습니다." ,Toast.LENGTH_SHORT).show();
+                                    savePref();
+                                    retrievePref();
                                     finish();
                                 } else {
-                                    if(task.getException().toString() != null){
+                                    if(task.getException().toString() == null){
                                         Toast.makeText(getApplicationContext(), "회원가입에 실패했습니다." ,Toast.LENGTH_SHORT).show();
                                     }
                                 }

@@ -33,9 +33,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ToggleButton;
 
 import com.ds.drawlayout.adapter.RecyclerviewAdapter;
+import com.ds.drawlayout.ui.info.InfoFragment;
 import com.ds.drawlayout.ui.main.MainFragment;
 import com.ds.drawlayout.ui.map.MapFragment;
 import com.ds.drawlayout.ui.home.HomeFragment;
@@ -48,6 +50,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.view.GravityCompat;
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MainFragment mMainFragment;
     private LogoutFragment mLogoutFragment;
     private MediaFragment mMediaFragment;
+    private InfoFragment mInfoFragment;
     private BottomNavigationView mBottomNavigationView;
     public static String userID;
     private FirebaseAnalytics mFirebaseAnalytics;
@@ -117,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mMapFragment = new MapFragment();
         mNotificationFragment = new NotificationFragment();
         mSettingsFragment = new SettingsFragment();
+        mMediaFragment = new MediaFragment();
+        mInfoFragment = new InfoFragment();
 
 //        mTabLayout = findViewById(R.id.tab_layout_appbar);
 //        mTabLayout.addTab(mTabLayout.newTab().setText("친구"));
@@ -161,6 +167,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navController.getGraph();
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+//        //목록 버튼
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar, R.string.app_name, R.string.content_txt_6);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState();
+//        navigationView.setNavigationItemSelectedListener(this);
+
+        //헤더 뷰 접근하기
+        View headerView = navigationView.getHeaderView(0);
+        ImageView headerIcon = headerView.findViewById(R.id.imageView_profile);
+        headerIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick(View v)");
+                // ActivityNotFoundException: Unable to find explicit activity class {com.ds.drawlayout2/com.ds.drawlayout.ui.info.InfoFragment}; have you declared this activity in your AndroidManifest.xml?
+//                startActivity(new Intent(getApplicationContext(), InfoFragment.class));
+
+//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mSettingsFragment).commit();
+
+//                startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
+
+                onFragmentChanged(1);
+
+            }
+        });
 
 //        ToggleButton mAccountToggle = (ToggleButton) findViewById(R.id.account_view_icon_button);
         // RuntimeException: Unable to start activity ComponentInfo{com.ds.drawlayout2/com.ds.drawlayout.MainActivity}: java.lang.NullPointerException: Attempt to invoke virtual method 'void android.widget.ToggleButton.setOnCheckedChangeListener(android.widget.CompoundButton$OnCheckedChangeListener)' on a null object reference
@@ -249,14 +281,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                        .addMessage("How about lunch?", timestamp4, "Coworker"))
 //                .build();
 
-        Intent intent = new Intent(this, SignUpActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        String replyLabel = getResources().getString(R.string.reply_label);
-        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
-                .setLabel(replyLabel)
-                .build();
+//        Intent intent = new Intent(this, SignUpActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+//
+//        String replyLabel = getResources().getString(R.string.reply_label);
+//        RemoteInput remoteInput = new RemoteInput.Builder(KEY_TEXT_REPLY)
+//                .setLabel(replyLabel)
+//                .build();
 //
 //        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
 //                .setSmallIcon(R.drawable.ic_arrow)
@@ -344,41 +376,43 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void onFragmentChanged(int index) {
             if (index == 0) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mSettingsFragment).commit();
-                getSupportFragmentManager().beginTransaction().addToBackStack(null);
-                // bsh
+                Log.d(TAG, "if (index == 0)");
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mSettingsFragment).setReorderingAllowed(true).commit();
                 Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 if(Build.VERSION.SDK_INT >= 26) {
-                    vib.vibrate(VibrationEffect.createOneShot(1000,10));
-                }else {
-                    vib.vibrate(1000);
+                    Log.d(TAG, "if(Build.VERSION.SDK_INT >= 26)");
+                    vib.vibrate(VibrationEffect.createOneShot(1500,1000));
+                } else {
+                    Log.d(TAG, "else()");
+                    vib.vibrate(3000);
                 }
-                onDestroyView();
             } else if (index == 1) {
+                Log.d(TAG, "else if (index == 1)");
                 // null error // fixed : new LogoutFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mLogoutFragment).addToBackStack(null).commit();
-                getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mLogoutFragment).commit();
                 onDestroyView();
             } else if (index == 2) {
+                Log.d(TAG, "else if (index == 2)");
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mHomeFragment).addToBackStack(null).commit();
-                getSupportFragmentManager().beginTransaction().addToBackStack(null);
-                onDestroyView();
             } else if (index == 3) {
+                Log.d(TAG, "else if (index == 3)");
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mMainFragment).addToBackStack(null).commit();
-                getSupportFragmentManager().beginTransaction().addToBackStack(null);
                 onDestroyView();
-
             } else if (index == 4) {
+                Log.d(TAG, "else if (index == 4)");
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mNotificationFragment).addToBackStack(null).commit();
-                getSupportFragmentManager().beginTransaction().addToBackStack(null);
-                onDestroyView();
+            } else {
+                Log.d(TAG, "else()");
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_content_main, mInfoFragment).addToBackStack(null).commit();
             }
     }
 
     public void onDestroyView() {
-        if(v!=null){
+        if(v != null) {
+            Log.d(TAG, "onDestroyView : if(v != null)");
             ViewGroup parent = (ViewGroup)v.getParent();
-            if(parent!=null){
+            if(parent != null) {
+                Log.d(TAG, "onDestroyView : if(parent != null)");
                 parent.removeView(v);
             }
         }
